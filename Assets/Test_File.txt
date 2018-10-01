@@ -1,6 +1,14 @@
 this is a test file uploaded now
 
 
+<<<<<<< Updated upstream
 Hello world
 
 Experience Tranquility
+=======
+<<<<<<< HEAD
+Hello world
+=======
+Hellow world
+>>>>>>> HamidTestfile
+>>>>>>> Stashed changes
