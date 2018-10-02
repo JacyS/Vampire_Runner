@@ -11,9 +11,12 @@ public class Drugs : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        if (Sobriety = 0)
-            Sobriety + crack = highness;
-	}
+        if (Sobriety == 0)
+        {
+            //Sobriety + crack = highness;
+        }
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
