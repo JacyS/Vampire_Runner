@@ -5,11 +5,7 @@ using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour {
 
-    public GameObject StartButton;
-    public GameObject OptionsButton;
-    public GameObject HighscoreButton;
-    public GameObject OptionsBack;
-    public GameObject HighscoreBack;
+    public Button StartButton, OptionsButton, HSButton, OptionsBack, HighscoreBack;
     public GameObject MMenuContain;
     public GameObject OptionsContain;
     public GameObject HighscoreContain;
@@ -17,13 +13,42 @@ public class MainMenuController : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        OptionsContain.gameObject.SetActive = false;
+        Button Start = StartButton.GetComponent<Button>();
+        Button Options = OptionsButton.GetComponent<Button>();
+        Button Highscore = HSButton.GetComponent<Button>();
+
+        MMenuContain.SetActive(true);
+        OptionsContain.SetActive(false);
+        HighscoreContain.SetActive(false);
+        
 
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    public void StartClick()
     {
-		
-	}
+        MMenuContain.SetActive(false);
+        OptionsContain.SetActive(false);
+        HighscoreContain.SetActive(false);
+    }
+
+    public void OptionsClick()
+    {
+        MMenuContain.SetActive(false);
+        OptionsContain.SetActive(true);
+        HighscoreContain.SetActive(false);
+    }
+
+    public void HSClick()
+    {
+        MMenuContain.SetActive(false);
+        OptionsContain.SetActive(false);
+        HighscoreContain.SetActive(true);
+    }
+
+    public void BackClick()
+    {
+        MMenuContain.SetActive(true);
+        OptionsContain.SetActive(false);
+        HighscoreContain.SetActive(false);
+    }
 }
