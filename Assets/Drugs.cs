@@ -13,7 +13,7 @@ public class Drugs : MonoBehaviour {
 
         if (Sobriety == 0)
         {
-            //Sobriety + crack = highness;
+            highness = Sobriety + crack;
         }
 
     }
