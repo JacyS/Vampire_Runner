@@ -35,4 +35,9 @@ public class PlayerController : MonoBehaviour {
             }
         }
 	}
+
+    public void GetPowerup()
+    {
+        Debug.Log("Powerup Collected!!!");
+    }
 }
