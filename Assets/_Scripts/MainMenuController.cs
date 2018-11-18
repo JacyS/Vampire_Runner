@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -69,6 +70,11 @@ public class MainMenuController : MonoBehaviour
         SkinsContain.SetActive(false);
         PowerUpContain.SetActive(true); //Shows Power-up Menu
         GameContain.SetActive(false);
+    }
+
+    public void GotoNextScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
 }

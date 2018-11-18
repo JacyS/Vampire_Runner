@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/VampireRunnerScene.unity
+    guid: 71b9db3b2ad1e31489e466cb4dd1538a
   m_configObjects: {}
