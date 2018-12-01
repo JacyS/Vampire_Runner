@@ -412,9 +412,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a6c7876412bc4146b514c4a7bc5518e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thePlatform: {fileID: 1754231296}
+  Platform1: {fileID: 1754231296}
   generationPoint: {fileID: 117913777}
-  distanceBetween: 3
+  distanceBetween: 0
+  RandomNum: 0
 --- !u!4 &749113223
 Transform:
   m_ObjectHideFlags: 0

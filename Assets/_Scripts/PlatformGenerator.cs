@@ -4,28 +4,39 @@ using UnityEngine;
 
 public class PlatformGenerator : MonoBehaviour {
 
-    public GameObject thePlatform;
+    public GameObject Platform1;
     public Transform generationPoint;
     public float distanceBetween;
+    public float RandomNum;
+    float timeToGo;
 
     private float platformWidth;
 
 
-	// Use this for initialization
-	void Start () {
-        platformWidth = thePlatform.GetComponent<BoxCollider2D>().size.x;
+    // Use this for initialization
+    void Start() {
+        platformWidth = Platform1.GetComponent<BoxCollider2D>().size.x;
+        timeToGo = Time.fixedTime + 1.0f;
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-        if(transform.position.x < generationPoint.position.x)
+    }
+
+    // Update is called once per frame
+    void FixedUpdate() {
+        RandomNum = Random.Range(1, 20);
+        if (Time.fixedTime >= timeToGo)
         {
-            transform.position = new Vector3(transform.position.x + platformWidth + distanceBetween, transform.position.y, transform.position.z);
+            if (RandomNum <= 10 && (transform.position.x < generationPoint.position.x))
+            {
+                transform.position = new Vector3(transform.position.x + platformWidth + distanceBetween, transform.position.y, transform.position.z);
 
-            Instantiate(thePlatform, transform.position, transform.rotation);
+                Instantiate(Platform1, transform.position, transform.rotation);
+            }
+            timeToGo = Time.fixedTime + 1.0f;
+
+
         }
 
-	}
-}
+       
+    }
+   
+} 
