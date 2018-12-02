@@ -11,6 +11,7 @@ public class PlatformGenerator : MonoBehaviour {
     public float distanceBetween;
     public float RandomNum;
     float timeToGo;
+    public ObjectPooler theObjectPool;
 
     private float platformWidth;
 
@@ -27,24 +28,29 @@ public class PlatformGenerator : MonoBehaviour {
         RandomNum = Random.Range(0, 19);
         if (Time.fixedTime >= timeToGo)
         {
-            if (RandomNum <= 10 && (transform.position.x < generationPoint.position.x))
+            if (RandomNum <= 20 && (transform.position.x < generationPoint.position.x))
             {
                 transform.position = new Vector3(transform.position.x + platformWidth + distanceBetween, transform.position.y, transform.position.z);
 
-                Instantiate(Platform1, transform.position, transform.rotation);
+                //Instantiate(Platform1, transform.position, transform.rotation);
+                GameObject newPlatform = theObjectPool.GetPooledObject();
+
+                newPlatform.transform.position = transform.position;
+                newPlatform.transform.rotation = transform.rotation;
+                newPlatform.SetActive(true);
             }
 
             else if (RandomNum <= 15 && (transform.position.x < generationPoint.position.x))
             {
                 transform.position = new Vector3(transform.position.x + platformWidth + distanceBetween, transform.position.y, transform.position.z);
 
-                Instantiate(Platform2, transform.position, transform.rotation);
+               // Instantiate(Platform2, transform.position, transform.rotation);
             }
             else if (RandomNum <= 20 && (transform.position.x < generationPoint.position.x))
             {
                 transform.position = new Vector3(transform.position.x + platformWidth + distanceBetween, transform.position.y, transform.position.z);
 
-                Instantiate(Platform3, transform.position, transform.rotation);
+                //Instantiate(Platform3, transform.position, transform.rotation);
             }
             timeToGo = Time.fixedTime + 0.75f;
 

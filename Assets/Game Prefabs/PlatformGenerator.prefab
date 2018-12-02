@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a6c7876412bc4146b514c4a7bc5518e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Platform1: {fileID: 0}
+  Platform1: {fileID: 1868596954936900, guid: 02ad29b959aa9d247a64d3c0389e35b1, type: 2}
   Platform2: {fileID: 1635070251468354, guid: dfa6a1b40f614e24083db6ed3c664b7b, type: 2}
   Platform3: {fileID: 1409454899712756, guid: e305bcd843420fd4eac13f2d0d8790d6, type: 2}
   generationPoint: {fileID: 0}
