@@ -12,6 +12,7 @@ public class PlatformGenerator : MonoBehaviour {
     public ObjectPooler theObjectPool;
     public ObjectPooler theObjectPool2;
     public ObjectPooler theObjectPool3;
+    public ObjectPooler theObjectPool4;
     private PickupGenerator thePickupGenerator;
     private float platformWidth;
     public float randomPickupThreshold;
@@ -27,7 +28,7 @@ public class PlatformGenerator : MonoBehaviour {
 
     // Update is called once per frame
     void FixedUpdate() {
-        RandomNum = Random.Range(0, 19);
+        RandomNum = Random.Range(0, 22);
         if (Time.fixedTime >= timeToGo)
         {
             if (RandomNum <= 10 && (transform.position.x < generationPoint.position.x))
@@ -62,6 +63,17 @@ public class PlatformGenerator : MonoBehaviour {
                 transform.position = new Vector3(transform.position.x + platformWidth + distanceBetween, transform.position.y, transform.position.z);
                 
                 GameObject newPlatform = theObjectPool3.GetPooledObject();
+
+                newPlatform.transform.position = transform.position;
+                newPlatform.transform.rotation = transform.rotation;
+                newPlatform.SetActive(true);
+
+            }
+            else if (RandomNum <= 23 && (transform.position.x < generationPoint.position.x))
+            {
+                transform.position = new Vector3(transform.position.x + platformWidth + distanceBetween, transform.position.y, transform.position.z);
+
+                GameObject newPlatform = theObjectPool4.GetPooledObject();
 
                 newPlatform.transform.position = transform.position;
                 newPlatform.transform.rotation = transform.rotation;
