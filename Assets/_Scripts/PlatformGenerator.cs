@@ -5,13 +5,13 @@ using UnityEngine;
 public class PlatformGenerator : MonoBehaviour {
 
     public GameObject Platform1;
-    public GameObject Platform2;
-    public GameObject Platform3;
     public Transform generationPoint;
     public float distanceBetween;
     public float RandomNum;
     float timeToGo;
     public ObjectPooler theObjectPool;
+    public ObjectPooler theObjectPool2;
+    public ObjectPooler theObjectPool3;
 
     private float platformWidth;
 
@@ -28,11 +28,10 @@ public class PlatformGenerator : MonoBehaviour {
         RandomNum = Random.Range(0, 19);
         if (Time.fixedTime >= timeToGo)
         {
-            if (RandomNum <= 20 && (transform.position.x < generationPoint.position.x))
+            if (RandomNum <= 10 && (transform.position.x < generationPoint.position.x))
             {
                 transform.position = new Vector3(transform.position.x + platformWidth + distanceBetween, transform.position.y, transform.position.z);
 
-                //Instantiate(Platform1, transform.position, transform.rotation);
                 GameObject newPlatform = theObjectPool.GetPooledObject();
 
                 newPlatform.transform.position = transform.position;
@@ -44,13 +43,22 @@ public class PlatformGenerator : MonoBehaviour {
             {
                 transform.position = new Vector3(transform.position.x + platformWidth + distanceBetween, transform.position.y, transform.position.z);
 
-               // Instantiate(Platform2, transform.position, transform.rotation);
+                
+                GameObject newPlatform = theObjectPool2.GetPooledObject();
+
+                newPlatform.transform.position = transform.position;
+                newPlatform.transform.rotation = transform.rotation;
+                newPlatform.SetActive(true);
             }
             else if (RandomNum <= 20 && (transform.position.x < generationPoint.position.x))
             {
                 transform.position = new Vector3(transform.position.x + platformWidth + distanceBetween, transform.position.y, transform.position.z);
+                
+                GameObject newPlatform = theObjectPool3.GetPooledObject();
 
-                //Instantiate(Platform3, transform.position, transform.rotation);
+                newPlatform.transform.position = transform.position;
+                newPlatform.transform.rotation = transform.rotation;
+                newPlatform.SetActive(true);
             }
             timeToGo = Time.fixedTime + 0.75f;
 
