@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
@@ -25,12 +26,23 @@ public class PlayerController : MonoBehaviour {
     float currentSlidingReload;
 
     bool playerDead;
+    public GameObject gameOver;
+
+    //score
+    float startx;
+    float endx;
+    float score = 0;
 
     // Use this for initialization
     void Start () {
         myRigidbody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<Collider2D>();
         myAnimator = GetComponent<Animator>();
+
+        //gameOver = Instantiate(gameOver);
+        gameOver.SetActive(false);
+
+        startx = transform.position.x;
 	}
 	
 	// Update is called once per frame
@@ -74,6 +86,12 @@ public class PlayerController : MonoBehaviour {
         myAnimator.SetBool("isGrounded", grounded);
         myAnimator.SetBool("isSliding", sliding);
         myAnimator.SetBool("isDead", playerDead);
+
+        //check death from falling (y position being too low)
+        if (transform.position.y < -5)
+        {
+            PlayerDie();
+        }
     }
 
     void GetInputButtons()
@@ -97,8 +115,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (collision.tag == "hazard")
         {
-            moveSpeed = 0;
-            playerDead = true;
+            PlayerDie();
         }
     }
 
@@ -106,5 +123,20 @@ public class PlayerController : MonoBehaviour {
     public void GetPowerup()
     {
         Debug.Log("Powerup Collected!!!");
+    }
+
+    public void PlayerDie()
+    {
+        if (!playerDead)
+        {
+            //set variables
+            gameOver.SetActive(true);
+            moveSpeed = 0;
+            playerDead = true;
+            //do score
+            endx = transform.position.x;
+            score = Mathf.Floor(endx - startx);
+            GameObject.Find("ScoreText").GetComponent<Text>().text = "Score " + score.ToString();
+        }
     }
 }
