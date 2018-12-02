@@ -8,7 +8,7 @@ public class MainMenuController : MonoBehaviour
 {
 
     public Button StartButton, OptionsButton, HSButton, OptionsBack, HighscoreBack, StartBack, PlayButton;
-    public GameObject MMenuContain, OptionsContain, HighscoreContain, SkinsContain, PowerUpContain, GameContain;
+    public GameObject MMenuContain, OptionsContain, HighscoreContain, SkinsContain, PowerUpContain;
 
     // Use this for initialization
     void Start()
@@ -18,7 +18,6 @@ public class MainMenuController : MonoBehaviour
         HighscoreContain.SetActive(false);
         SkinsContain.SetActive(false);
         PowerUpContain.SetActive(false);
-        GameContain.SetActive(false);
 
     }
 
@@ -29,7 +28,6 @@ public class MainMenuController : MonoBehaviour
         HighscoreContain.SetActive(false);
         SkinsContain.SetActive(true); //Shows Skins Menu
         PowerUpContain.SetActive(false);
-        GameContain.SetActive(false);
     }
 
     public void OptionsClick()
@@ -39,7 +37,6 @@ public class MainMenuController : MonoBehaviour
         HighscoreContain.SetActive(false);
         SkinsContain.SetActive(false);
         PowerUpContain.SetActive(false);
-        GameContain.SetActive(false);
     }
 
     public void HSClick()
@@ -49,7 +46,6 @@ public class MainMenuController : MonoBehaviour
         HighscoreContain.SetActive(true); //Shows Highscore Menu
         SkinsContain.SetActive(false);
         PowerUpContain.SetActive(false);
-        GameContain.SetActive(false);
     }
 
     public void BackClick()
@@ -59,7 +55,6 @@ public class MainMenuController : MonoBehaviour
         HighscoreContain.SetActive(false);
         SkinsContain.SetActive(false);
         PowerUpContain.SetActive(false);
-        GameContain.SetActive(false);
     }
 
     public void PowersClick()
@@ -69,7 +64,6 @@ public class MainMenuController : MonoBehaviour
         HighscoreContain.SetActive(false);
         SkinsContain.SetActive(false);
         PowerUpContain.SetActive(true); //Shows Power-up Menu
-        GameContain.SetActive(false);
     }
 
     public void GotoNextScene()
