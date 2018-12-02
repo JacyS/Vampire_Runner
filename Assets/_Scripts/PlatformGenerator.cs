@@ -12,15 +12,17 @@ public class PlatformGenerator : MonoBehaviour {
     public ObjectPooler theObjectPool;
     public ObjectPooler theObjectPool2;
     public ObjectPooler theObjectPool3;
-
+    private PickupGenerator thePickupGenerator;
     private float platformWidth;
+    public float randomPickupThreshold;
 
 
     // Use this for initialization
     void Start() {
         platformWidth = Platform1.GetComponent<BoxCollider2D>().size.x;
         timeToGo = Time.fixedTime + 0.75f;
-
+        thePickupGenerator = FindObjectOfType<PickupGenerator>();
+        randomPickupThreshold = 75f;
     }
 
     // Update is called once per frame
@@ -37,6 +39,11 @@ public class PlatformGenerator : MonoBehaviour {
                 newPlatform.transform.position = transform.position;
                 newPlatform.transform.rotation = transform.rotation;
                 newPlatform.SetActive(true);
+
+                if (Random.Range(0f, 100f) < randomPickupThreshold)
+                {
+                    thePickupGenerator.SpawnPickups(new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z));
+                }
             }
 
             else if (RandomNum <= 15 && (transform.position.x < generationPoint.position.x))
@@ -59,6 +66,7 @@ public class PlatformGenerator : MonoBehaviour {
                 newPlatform.transform.position = transform.position;
                 newPlatform.transform.rotation = transform.rotation;
                 newPlatform.SetActive(true);
+
             }
             timeToGo = Time.fixedTime + 0.75f;
 
