@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4375866978017330}
   - component: {fileID: 212849950623457742}
   m_Layer: 0
-  m_Name: Werewolf
+  m_Name: NOT THE Werewolf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

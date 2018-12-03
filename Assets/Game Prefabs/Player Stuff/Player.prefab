@@ -127,6 +127,9 @@ MonoBehaviour:
   slideTime: 0.4
   slidingReload: 0.5
   gameOver: {fileID: 0}
+  startUI: {fileID: 0}
+  Sunrise: {fileID: 0}
+  initial_sunrise_distance: -3
 --- !u!212 &212116210288434020
 SpriteRenderer:
   m_ObjectHideFlags: 1

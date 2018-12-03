@@ -6,6 +6,8 @@ public class PowerupCollectScript : MonoBehaviour {
 
     public GameObject myParticleEffect;
 
+    float rotate_speed = 200;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
@@ -19,5 +21,10 @@ public class PowerupCollectScript : MonoBehaviour {
             //destroy the instance so it can't be picked up twice
             Destroy(this.gameObject);
         }
+    }
+
+    private void Update()
+    {
+        transform.Rotate(Vector3.back * rotate_speed * Time.deltaTime );
     }
 }
