@@ -752,6 +752,48 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 374483360}
   m_CullTransparentMesh: 0
+--- !u!1001 &384730574
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4524208045335558, guid: 35950d3cc25c8734d9936bad77c4756b, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -7.2420006
+      objectReference: {fileID: 0}
+    - target: {fileID: 4524208045335558, guid: 35950d3cc25c8734d9936bad77c4756b, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -1.3510598
+      objectReference: {fileID: 0}
+    - target: {fileID: 4524208045335558, guid: 35950d3cc25c8734d9936bad77c4756b, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.00081048463
+      objectReference: {fileID: 0}
+    - target: {fileID: 4524208045335558, guid: 35950d3cc25c8734d9936bad77c4756b, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4524208045335558, guid: 35950d3cc25c8734d9936bad77c4756b, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4524208045335558, guid: 35950d3cc25c8734d9936bad77c4756b, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4524208045335558, guid: 35950d3cc25c8734d9936bad77c4756b, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4524208045335558, guid: 35950d3cc25c8734d9936bad77c4756b, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 35950d3cc25c8734d9936bad77c4756b, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &395642723
 GameObject:
   m_ObjectHideFlags: 0
@@ -3644,7 +3686,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1531361198}
-        m_MethodName: GotoNextScene
+        m_MethodName: GotoGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
