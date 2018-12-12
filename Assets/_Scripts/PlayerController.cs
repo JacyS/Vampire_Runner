@@ -45,6 +45,11 @@ public class PlayerController : MonoBehaviour {
     public GameObject dustParticle;
     bool playerDusted = false;
 
+    //powerup
+    bool is_bat = false;
+    float bat_time = 5;
+    float bat_timer;
+
     // Use this for initialization
     void Start () {
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -67,37 +72,47 @@ public class PlayerController : MonoBehaviour {
 
         StartRunning();
 
-        if (JumpButton && grounded && !sliding) { 
-            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
-        }
-
-        if (SlideButton && grounded && !sliding && canSlide)
+        if (!is_bat)
         {
-            sliding = true;
-            currentSlideTime = 0;
-        }
-
-        if (sliding)
-        {
-            currentSlideTime += Time.deltaTime;
-            if (currentSlideTime >= slideTime)
+            if (JumpButton && grounded && !sliding)
             {
-                sliding = false;
-                canSlide = false;
-                currentSlidingReload = slidingReload;
+                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
+            }
+
+            if (SlideButton && grounded && !sliding && canSlide)
+            {
+                sliding = true;
+                currentSlideTime = 0;
+            }
+
+            if (sliding)
+            {
+                currentSlideTime += Time.deltaTime;
+                if (currentSlideTime >= slideTime)
+                {
+                    sliding = false;
+                    canSlide = false;
+                    currentSlidingReload = slidingReload;
+                }
+            }
+
+            if (!canSlide)
+            {
+                currentSlidingReload -= Time.deltaTime;
+                if (currentSlidingReload <= 0)
+                {
+                    canSlide = true;
+                }
             }
         }
-
-        if (!canSlide)
+        else
         {
-            currentSlidingReload -= Time.deltaTime;
-            if (currentSlidingReload <= 0)
-            {
-                canSlide = true;
-            }
+            myRigidbody.gravityScale = 0;
+            myCollider.enabled = false;
         }
 
         //set animation
+        myAnimator.SetBool("isBat", is_bat);
         myAnimator.SetBool("isGrounded", grounded);
         myAnimator.SetBool("isSliding", sliding);
         myAnimator.SetBool("isDead", playerDead);
@@ -110,6 +125,19 @@ public class PlayerController : MonoBehaviour {
 
         //sunrise stuff
         MoveSunrise();
+
+        //bat powerup timer
+        if (is_bat)
+        {
+            bat_timer -= Time.deltaTime;
+            if (bat_timer <= 0)
+            {
+                is_bat = false;
+                myRigidbody.gravityScale = 5;
+                myCollider.enabled = true;
+                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce / 2);
+            }
+        }
     }
 
     void MoveSunrise()
@@ -173,12 +201,20 @@ public class PlayerController : MonoBehaviour {
             GetComponent<Renderer>().enabled = false;
             Instantiate(dustParticle, transform.position, Quaternion.identity);
         }
+
     }
 
 
-    public void GetPowerup()
+    public void GetPowerup(string type)
     {
         Debug.Log("Powerup Collected!!!");
+
+        if (type == "bat") {
+            is_bat = true;
+            bat_timer = bat_time;
+            Vector2 vel = myRigidbody.velocity;
+            myRigidbody.velocity = new Vector2(vel.x, 0);
+        }
     }
 
     public void PlayerDie()
