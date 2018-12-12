@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class MainMenuController : MonoBehaviour
 {
 
-    public Button StartButton, OptionsButton, HSButton, OptionsBack, HighscoreBack, StartBack, PlayButton;
-    public GameObject MMenuContain, OptionsContain, HighscoreContain, SkinsContain, PowerUpContain;
+    public Button StartButton, OptionsButton, HSButton, OptionsBack, HighscoreBack, StartBack, PlayButton, Store, StoreSkins, StorePowerUps, StoreCurrency;
+    public GameObject MMenuContain, OptionsContain, HighscoreContain, SkinsContain, PowerUpContain, StoreContain, StoreSkinsContain, StorePowerUpsContain, StoreCurrencyContain;
 
     // Use this for initialization
     void Start()
@@ -55,6 +55,7 @@ public class MainMenuController : MonoBehaviour
         HighscoreContain.SetActive(false);
         SkinsContain.SetActive(false);
         PowerUpContain.SetActive(false);
+        StoreContain.SetActive(false);
     }
 
     public void PowersClick()
@@ -64,6 +65,37 @@ public class MainMenuController : MonoBehaviour
         HighscoreContain.SetActive(false);
         SkinsContain.SetActive(false);
         PowerUpContain.SetActive(true); //Shows Power-up Menu
+    }
+
+    public void StoreClick()
+    {
+        MMenuContain.SetActive(false);
+        OptionsContain.SetActive(false);
+        HighscoreContain.SetActive(false);
+        SkinsContain.SetActive(false);
+        PowerUpContain.SetActive(false);
+        StoreContain.SetActive(true);//Shows Store 
+    }
+
+    public void StoreSkinClick()
+    {
+        StoreSkinsContain.SetActive(true);//Show Skin store
+        StorePowerUpsContain.SetActive(false);
+        StoreCurrencyContain.SetActive(false);
+    }
+
+    public void StorePowerUpsClick()
+    {
+        StoreSkinsContain.SetActive(false);
+        StorePowerUpsContain.SetActive(true);//Show powerup store
+        StoreCurrencyContain.SetActive(false);
+    }
+
+    public void StoreCurrencyClick()
+    {
+        StoreSkinsContain.SetActive(false);
+        StorePowerUpsContain.SetActive(false);
+        StoreCurrencyContain.SetActive(true); //Show currency store
     }
 
     public void GotoNextScene()
