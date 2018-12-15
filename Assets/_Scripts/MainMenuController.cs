@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class MainMenuController : MonoBehaviour
 {
 
-    public Button StartButton, OptionsButton, HSButton, OptionsBack, HighscoreBack, StartBack, PlayButton, Store, StoreSkins, StorePowerUps, StoreCurrency;
-    public GameObject MMenuContain, OptionsContain, HighscoreContain, SkinsContain, PowerUpContain, StoreContain, StoreSkinsContain, StorePowerUpsContain, StoreCurrencyContain;
+    public Button PlayButton, OptionsButton, HSButton, OptionsBack, HighscoreBack, Store, StoreSkins, StorePowerUps, StoreCurrency;
+    public GameObject MMenuContain, OptionsContain, HighscoreContain, StoreContain, StoreSkinsContain, StorePowerUpsContain, StoreCurrencyContain;
 
     // Use this for initialization
     void Start()
@@ -16,18 +16,7 @@ public class MainMenuController : MonoBehaviour
         MMenuContain.SetActive(true); //Shows Main Menu as default
         OptionsContain.SetActive(false);
         HighscoreContain.SetActive(false);
-        SkinsContain.SetActive(false);
-        PowerUpContain.SetActive(false);
 
-    }
-
-    public void StartClick()
-    {
-        MMenuContain.SetActive(false);
-        OptionsContain.SetActive(false);
-        HighscoreContain.SetActive(false);
-        SkinsContain.SetActive(true); //Shows Skins Menu
-        PowerUpContain.SetActive(false);
     }
 
     public void OptionsClick()
@@ -35,8 +24,6 @@ public class MainMenuController : MonoBehaviour
         MMenuContain.SetActive(false);
         OptionsContain.SetActive(true); //Shows Options Menu
         HighscoreContain.SetActive(false);
-        SkinsContain.SetActive(false);
-        PowerUpContain.SetActive(false);
     }
 
     public void HSClick()
@@ -44,8 +31,6 @@ public class MainMenuController : MonoBehaviour
         MMenuContain.SetActive(false);
         OptionsContain.SetActive(false);
         HighscoreContain.SetActive(true); //Shows Highscore Menu
-        SkinsContain.SetActive(false);
-        PowerUpContain.SetActive(false);
     }
 
     public void BackClick()
@@ -53,18 +38,7 @@ public class MainMenuController : MonoBehaviour
         MMenuContain.SetActive(true); //Shows Main Menu
         OptionsContain.SetActive(false);
         HighscoreContain.SetActive(false);
-        SkinsContain.SetActive(false);
-        PowerUpContain.SetActive(false);
         StoreContain.SetActive(false);
-    }
-
-    public void PowersClick()
-    {
-        MMenuContain.SetActive(false);
-        OptionsContain.SetActive(false);
-        HighscoreContain.SetActive(false);
-        SkinsContain.SetActive(false);
-        PowerUpContain.SetActive(true); //Shows Power-up Menu
     }
 
     public void StoreClick()
@@ -72,22 +46,22 @@ public class MainMenuController : MonoBehaviour
         MMenuContain.SetActive(false);
         OptionsContain.SetActive(false);
         HighscoreContain.SetActive(false);
-        SkinsContain.SetActive(false);
-        PowerUpContain.SetActive(false);
-        StoreContain.SetActive(true);//Shows Store 
-    }
-
-    public void StoreSkinClick()
-    {
-        StoreSkinsContain.SetActive(true);//Show Skin store
+        StoreContain.SetActive(true);//Shows Store
+        StoreSkinsContain.SetActive(false);
         StorePowerUpsContain.SetActive(false);
-        StoreCurrencyContain.SetActive(false);
     }
 
     public void StorePowerUpsClick()
     {
         StoreSkinsContain.SetActive(false);
         StorePowerUpsContain.SetActive(true);//Show powerup store
+        StoreCurrencyContain.SetActive(false);
+    }
+
+    public void StoreSkinsClick()
+    {
+        StoreSkinsContain.SetActive(true);//Show skin store
+        StorePowerUpsContain.SetActive(false);
         StoreCurrencyContain.SetActive(false);
     }
 
