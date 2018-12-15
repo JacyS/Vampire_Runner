@@ -32,10 +32,13 @@ public class PlayerController : MonoBehaviour {
     public GameObject startUI;
     float start_timer;
 
+    public GameObject myResurrectDisplay;
+
     //score
     float startx;
     float endx;
     float score = 0;
+    float runs_coins = 0;
 
     //sunrise
     public GameObject Sunrise;
@@ -47,8 +50,22 @@ public class PlayerController : MonoBehaviour {
 
     //powerup
     bool is_bat = false;
+    bool has_magnet;
+    bool has_resurrect;
+
+    bool safe;
+    float safe_time = 2;
+    float safe_timer;
+    Vector2 lastSafePos;
+
     float bat_time = 5;
     float bat_timer;
+
+    float magnet_time = 6;
+    float magnet_timer;
+
+    int powerup_coin_amount = 100;
+    
 
     // Use this for initialization
     void Start () {
@@ -71,6 +88,8 @@ public class PlayerController : MonoBehaviour {
         myRigidbody.velocity = new Vector2(current_speed, myRigidbody.velocity.y);
 
         StartRunning();
+
+        if (grounded) { lastSafePos = transform.position; }
 
         if (!is_bat)
         {
@@ -138,6 +157,40 @@ public class PlayerController : MonoBehaviour {
                 myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce / 2);
             }
         }
+
+        //magnet powerup timer
+        if (has_magnet)
+        {
+            magnet_timer -= Time.deltaTime;
+            if (magnet_timer <= 0)
+            {
+                has_magnet = false;
+            }
+
+            GameObject[] coins;
+
+            coins = GameObject.FindGameObjectsWithTag("coin_pickup");
+            foreach (var coin in coins)
+            {
+                if (Vector2.Distance(transform.position,coin.transform.position) < 3)
+                {
+                    coin.GetComponent<CoinScript>().Magnet();
+                }
+            }
+        }
+
+        //resurrect powerup
+        myResurrectDisplay.SetActive(has_resurrect);
+
+        //safe timer
+        if (safe)
+        {
+            safe_timer -= Time.deltaTime;
+            if (safe_timer <= 0)
+            {
+                safe = false;
+            }
+        }
     }
 
     void MoveSunrise()
@@ -202,6 +255,12 @@ public class PlayerController : MonoBehaviour {
             Instantiate(dustParticle, transform.position, Quaternion.identity);
         }
 
+        if (collision.tag == "coin_pickup")
+        {
+            collision.gameObject.SetActive(false);
+            runs_coins++;
+        }
+
     }
 
 
@@ -215,11 +274,32 @@ public class PlayerController : MonoBehaviour {
             Vector2 vel = myRigidbody.velocity;
             myRigidbody.velocity = new Vector2(vel.x, 0);
         }
+
+        if (type == "coin")
+        {
+            runs_coins += powerup_coin_amount;
+        }
+
+        if (type == "magnet")
+        {
+            has_magnet = true;
+            magnet_timer = magnet_time;
+        }
+
+        if (type == "resurrect")
+        {
+            has_resurrect = true;
+        }
+
+        if (type == "time")
+        {
+            sunrise_distance = initial_sunrise_distance;
+        }
     }
 
     public void PlayerDie()
     {
-        if (!playerDead)
+        if (!playerDead && !has_resurrect && !safe)
         {
             //set variables
             gameOver.SetActive(true);
@@ -230,6 +310,15 @@ public class PlayerController : MonoBehaviour {
             endx = transform.position.x;
             score = Mathf.Floor(endx - startx);
             GameObject.Find("ScoreText").GetComponent<Text>().text = "Score " + score.ToString();
+        }
+
+        if (has_resurrect)
+        {
+            has_resurrect = false;
+            lastSafePos.y = -1.31f;//this is the y position of being on the ground
+            transform.position = lastSafePos;
+            safe_timer = safe_time;
+            safe = true;
         }
     }
 }
