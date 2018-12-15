@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StoreController : MonoBehaviour
+public class StoreController
 {
     //Currencys
     public Text coinsCurrency;
