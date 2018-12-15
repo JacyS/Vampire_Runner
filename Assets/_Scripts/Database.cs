@@ -12,7 +12,7 @@ public class Database : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         connectionString = "URI=file:" + Application.dataPath + "/Database.s3db";
-        InsertData("dave", 23); // true, true
+        InsertData("dave", 23, 1, 1); // true, true
         GetScores();
  
         
@@ -23,7 +23,7 @@ public class Database : MonoBehaviour {
 		
 	}
 
-    private void InsertData(string name, int newScore) // bool Skin1Unlock, bool Skin2Unlock
+    private void InsertData(string name, float newScore, int Skin1Unlock, int Skin2Unlock) // bool Skin1Unlock, bool Skin2Unlock
     {
         using (IDbConnection dbConnection = new SqliteConnection(connectionString))
         {
@@ -31,7 +31,7 @@ public class Database : MonoBehaviour {
 
             using (IDbCommand dbCmd = dbConnection.CreateCommand())
             {
-                string sqlQuery = String.Format ("INSERT INTO PlayerData(Name,HighScore) VALUES(\"{0}\", \"{1}\")", name,newScore); // \"{2}\", \"{3}\" ,Skin1Unlock,Skin2Unlock
+                string sqlQuery = String.Format ("INSERT INTO PlayerData(Name,HighScore,Skin1Unlock,Skin2Unlock) VALUES(\"{0}\", \"{1}\", \"{2}\", \"{3}\")", name,newScore,Skin1Unlock,Skin2Unlock); // \"{2}\", \"{3}\" ,Skin1Unlock,Skin2Unlock
 
                 dbCmd.CommandText = sqlQuery;
                 dbCmd.ExecuteScalar();
@@ -55,7 +55,7 @@ public class Database : MonoBehaviour {
                 {
                     while (reader.Read())
                     {
-                        Debug.Log(reader.GetString(1) + " - " + reader.GetFloat(2)); //+ " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)
+                        Debug.Log(reader.GetString(1) + " - " + reader.GetFloat(2) + " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)); //+ " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)
 
                     }
                     dbConnection.Close();
