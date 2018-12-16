@@ -7,17 +7,17 @@ using UnityEngine;
 
 public class DataHolder {
 
-    public int HighScore { get; set; }
+    public float HighScore { get; set; }
 
     public string Name { get; set; }
 
-    public int ID { get; set; }
+    public float ID { get; set; }
 
-    public int Skin1Unlock { get; set; }
+    public float Skin1Unlock { get; set; }
 
-    public int Skin2Unlock { get; set; }
+    public float Skin2Unlock { get; set; }
 
-    public DataHolder(int highScore, string name, int id, int skin1Unlock, int skin2Unlock)
+    public DataHolder(float highScore, string name, float id, float skin1Unlock, float skin2Unlock)
     {
         this.HighScore = highScore;
         this.Name = name;

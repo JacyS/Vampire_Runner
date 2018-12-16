@@ -9,15 +9,14 @@ public class Database : MonoBehaviour {
 
     string connectionString;
     private List<DataHolder> dataList = new List<DataHolder>();
+    public GameObject scorePrefab;
+    public Transform scoreParent;
 
 	// Use this for initialization
 	void Start () {
         connectionString = "URI=file:" + Application.dataPath + "/Database.s3db";
-        //InsertData("dave", 23, 1, 1); // true, true
-        DeleteScore(32);
-        GetScores();
- 
-        
+        //InsertData("dave", 19, 1, 1); // true, true
+        ShowScores(); 
 	}
 	
 	// Update is called once per frame
@@ -58,8 +57,8 @@ public class Database : MonoBehaviour {
                 {
                     while (reader.Read())
                     {
-                        Debug.Log(reader.GetString(1) + " - " + reader.GetFloat(2) + " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)); //+ " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)
-                        dataList.Add(new DataHolder(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetInt32(3), reader.GetInt32(4)));
+                        //Debug.Log(reader.GetString(1) + " - " + reader.GetFloat(2) + " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)); //+ " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)
+                        dataList.Add(new DataHolder(reader.GetFloat(0), reader.GetString(1), reader.GetFloat(2), reader.GetFloat(3), reader.GetFloat(4)));
                     }
                     dbConnection.Close();
                     reader.Close();
@@ -84,6 +83,21 @@ public class Database : MonoBehaviour {
             }
         }
     }
+    private void ShowScores()
+    {
+        GetScores();
+        for (int i = 0; i < dataList.Count; i++)
+        {
+            GameObject tmpObjec = Instantiate(scorePrefab);
+
+            DataHolder tmpScore = dataList[i];
+
+            tmpObjec.GetComponent<HighScoreScript>().SetScore(tmpScore.Name, tmpScore.HighScore.ToString(), "#" + (i + 1).ToString());
+            tmpObjec.transform.SetParent(scoreParent);
+            tmpObjec.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+        }
+    }
+
 
     public void SaveScore(string name, float score, float runs_coins)
     {
