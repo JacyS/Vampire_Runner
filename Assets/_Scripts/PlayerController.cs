@@ -315,8 +315,8 @@ public class PlayerController : MonoBehaviour {
         if (has_resurrect)
         {
             has_resurrect = false;
-            lastSafePos.y = -1.31f;//this is the y position of being on the ground
-            transform.position = lastSafePos;
+            //lastSafePos.y = -1.31f;//this is the y position of being on the ground
+            //transform.position = lastSafePos;//for when you could fall out of the level in the past
             safe_timer = safe_time;
             safe = true;
         }
