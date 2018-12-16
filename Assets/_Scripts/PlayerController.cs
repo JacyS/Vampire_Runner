@@ -310,6 +310,12 @@ public class PlayerController : MonoBehaviour {
             endx = transform.position.x;
             score = Mathf.Floor(endx - startx);
             GameObject.Find("ScoreText").GetComponent<Text>().text = "Score " + score.ToString();
+
+
+
+            //save score to database manager
+            string player_name = "test_player";
+            GameObject.Find("DatabaseManager").GetComponent<Database>().SaveScore(player_name, score, runs_coins);
         }
 
         if (has_resurrect)

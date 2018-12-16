@@ -58,7 +58,7 @@ public class Database : MonoBehaviour {
                 {
                     while (reader.Read())
                     {
-                        //Debug.Log(reader.GetString(1) + " - " + reader.GetFloat(2) + " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)); //+ " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)
+                        Debug.Log(reader.GetString(1) + " - " + reader.GetFloat(2) + " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)); //+ " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)
                         dataList.Add(new DataHolder(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetInt32(3), reader.GetInt32(4)));
                     }
                     dbConnection.Close();
@@ -83,5 +83,11 @@ public class Database : MonoBehaviour {
                 dbConnection.Close();
             }
         }
+    }
+
+    public void SaveScore(string name, float score, float runs_coins)
+    {
+        InsertData(name, score, 0, 0);
+        //GetScores();
     }
 }
