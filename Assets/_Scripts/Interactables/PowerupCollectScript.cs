@@ -8,12 +8,14 @@ public class PowerupCollectScript : MonoBehaviour {
 
     float rotate_speed = 200;
 
+    public string my_powerup_type;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             //communicate to the player script to get the powerup
-            collision.GetComponent<PlayerController>().GetPowerup();
+            collision.GetComponent<PlayerController>().GetPowerup(my_powerup_type);
 
             //make a particle effect at my location
             Instantiate(myParticleEffect,transform.position, Quaternion.identity);

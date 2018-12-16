@@ -6,6 +6,8 @@ TagManager:
   tags:
   - hazard
   - sunrise_tag
+  - return_from_bat
+  - coin_pickup
   layers:
   - Default
   - TransparentFX
