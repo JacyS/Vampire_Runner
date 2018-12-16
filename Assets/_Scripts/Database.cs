@@ -8,11 +8,13 @@ using Mono.Data.Sqlite;
 public class Database : MonoBehaviour {
 
     string connectionString;
+    private List<DataHolder> dataList = new List<DataHolder>();
 
 	// Use this for initialization
 	void Start () {
         connectionString = "URI=file:" + Application.dataPath + "/Database.s3db";
-        InsertData("dave", 23, 1, 1); // true, true
+        //InsertData("dave", 23, 1, 1); // true, true
+        DeleteScore(32);
         GetScores();
  
         
@@ -41,6 +43,7 @@ public class Database : MonoBehaviour {
             }
     private void GetScores()
     {
+        dataList.Clear();
         using (IDbConnection dbConnection = new SqliteConnection(connectionString))
         {
             dbConnection.Open();
@@ -55,12 +58,29 @@ public class Database : MonoBehaviour {
                 {
                     while (reader.Read())
                     {
-                        Debug.Log(reader.GetString(1) + " - " + reader.GetFloat(2) + " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)); //+ " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)
-
+                        //Debug.Log(reader.GetString(1) + " - " + reader.GetFloat(2) + " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)); //+ " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)
+                        dataList.Add(new DataHolder(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetInt32(3), reader.GetInt32(4)));
                     }
                     dbConnection.Close();
                     reader.Close();
                 }
+            }
+        }
+    }
+
+    private void DeleteScore(int id)
+    {
+        using (IDbConnection dbConnection = new SqliteConnection(connectionString))
+        {
+            dbConnection.Open();
+
+            using (IDbCommand dbCmd = dbConnection.CreateCommand())
+            {
+                string sqlQuery = String.Format("DELETE FROM PlayerData WHERE PlayerID = \"{0}\"", id);
+
+                dbCmd.CommandText = sqlQuery;
+                dbCmd.ExecuteScalar();
+                dbConnection.Close();
             }
         }
     }
