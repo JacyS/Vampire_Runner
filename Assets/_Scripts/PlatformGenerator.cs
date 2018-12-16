@@ -89,6 +89,7 @@ public class PlatformGenerator : MonoBehaviour {
 
                 GameObject newPlatform = theObjectPool5.GetPooledObject();
 
+
                 newPlatform.transform.position = transform.position;
                 newPlatform.transform.rotation = transform.rotation;
                 newPlatform.SetActive(true);

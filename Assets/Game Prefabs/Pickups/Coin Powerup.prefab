@@ -23,9 +23,10 @@ GameObject:
   - component: {fileID: 212266638245408574}
   - component: {fileID: 114859062796854206}
   - component: {fileID: 114633056256942164}
+  - component: {fileID: 114009420596871658}
   m_Layer: 0
   m_Name: Coin Powerup
-  m_TagString: Untagged
+  m_TagString: powerup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,6 +59,17 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.74
+--- !u!114 &114009420596871658
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1622293674209656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cab136a59e2f76478c2ec17a9f06224, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114633056256942164
 MonoBehaviour:
   m_ObjectHideFlags: 1

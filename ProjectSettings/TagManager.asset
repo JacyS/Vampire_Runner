@@ -8,6 +8,7 @@ TagManager:
   - sunrise_tag
   - return_from_bat
   - coin_pickup
+  - powerup
   layers:
   - Default
   - TransparentFX

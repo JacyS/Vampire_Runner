@@ -23,9 +23,10 @@ GameObject:
   - component: {fileID: 212576039128338476}
   - component: {fileID: 114402078131262544}
   - component: {fileID: 114278602171902294}
+  - component: {fileID: 114752002324861346}
   m_Layer: 0
   m_Name: Ressurrect Powerup
-  m_TagString: Untagged
+  m_TagString: powerup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,6 +85,17 @@ MonoBehaviour:
   myParticleEffect: {fileID: 1527980499033062, guid: 4dd1b33066604014c8cdececc11ec3a2,
     type: 2}
   my_powerup_type: resurrect
+--- !u!114 &114752002324861346
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1059500366341898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cab136a59e2f76478c2ec17a9f06224, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212576039128338476
 SpriteRenderer:
   m_ObjectHideFlags: 1
