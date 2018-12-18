@@ -31,9 +31,10 @@ public class StoreController : MonoBehaviour
 
     //SkinBoughtBools
 
-    bool Skin1Bought = false;
-    bool Skin2Bought = false;
+    float Skin1Bought = 0;
+    float Skin2Bought = 0;
 
+    GameObject DatabaseManager;
 
     void Awake()
     {
@@ -44,18 +45,26 @@ public class StoreController : MonoBehaviour
         skin2BatsText.text = skin2Bats + " BatCoins";
     }
 
+    private void Start()
+    {
+        DatabaseManager = GameObject.Find("DatabaseManager");
+
+        Skin1Bought = DatabaseManager.GetComponent<Database>().skin1unlocked;
+        Skin2Bought = DatabaseManager.GetComponent<Database>().skin2unlocked;
+    }
+
     void Update()
     {
         coinsCurrency.text = "Coins: " + coins;
         batcoinsCurrency.text = "BatCoins: " + batcoins;
-        if (Skin1Bought == true)
+        if (Skin1Bought == 1)
         {
             skin1CoinButton.interactable = false;
             skin1BatButton.interactable = false;
             skin1BatsText.text = "Purchased";
             skin1CoinsText.text = "Purchased";
         }
-        if (Skin2Bought == true)
+        if (Skin2Bought == 1)
         {
             skin2CoinButton.interactable = false;
             skin2BatButton.interactable = false;
@@ -74,7 +83,7 @@ public class StoreController : MonoBehaviour
         else
         {   
             coins = coins - skin1Coins;
-            Skin1Bought = true;
+            Skin1Bought = 1;
         }
 
     }
@@ -87,7 +96,8 @@ public class StoreController : MonoBehaviour
         else
         {
             batcoins = batcoins - skin1Bats;
-            Skin1Bought = true;
+            Skin1Bought = 1;
+            DatabaseManager.GetComponent<Database>().buySkin1();
         }
     }
     public void PurchaseSkin2Coins()
@@ -99,7 +109,8 @@ public class StoreController : MonoBehaviour
         else
         {
             coins = coins - skin2Coins;
-            Skin2Bought = true;
+            Skin2Bought = 1;
+            DatabaseManager.GetComponent<Database>().buySkin2();
         }
 
     }
@@ -112,7 +123,7 @@ public class StoreController : MonoBehaviour
         else
         {
             batcoins = batcoins - skin2Bats;
-            Skin2Bought = true;
+            Skin2Bought = 1;
         }
     }
     public void CurrencyPack1()

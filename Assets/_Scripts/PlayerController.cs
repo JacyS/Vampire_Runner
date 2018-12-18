@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour {
     //sunrise
     public GameObject Sunrise;
     public float initial_sunrise_distance;
-    float current_sunrise_distance = -10;
+    float current_sunrise_distance = -15;
     float sunrise_distance;
     public GameObject dustParticle;
     bool playerDusted = false;
@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         myRigidbody = GetComponent<Rigidbody2D>();
-        myCollider = GetComponent<Collider2D>();
+        myCollider = GetComponent<CircleCollider2D>();
         myAnimator = GetComponent<Animator>();
 
         //gameOver = Instantiate(gameOver);
@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour {
 
         if (grounded) { lastSafePos = transform.position; }
 
-        if (!is_bat)
+        if (!is_bat && !playerDead)
         {
             if (JumpButton && grounded && !sliding)
             {

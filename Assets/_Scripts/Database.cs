@@ -12,16 +12,32 @@ public class Database : MonoBehaviour {
     public GameObject scorePrefab;
     public Transform scoreParent;
 
+
+    public float skin1unlocked = 0;
+    public float skin2unlocked = 0;
+
 	// Use this for initialization
 	void Start () {
         connectionString = "URI=file:" + Application.dataPath + "/" + "Database.s3db"; //Only use this for the windows build and use in the editor, I don't know why they dont work interchangeably but I don't care because it's a simple workaround.
         //connectionString = "URI=file:" + Application.persistentDataPath + "/" + "Database.s3db"; - THIS MUST BE SET BEFORE THE ANDROID BUILD, AS IT IS THE ONLY WAY IT WILL WORK PROPERLY IN UNITY
         CreateDataBase();
         InsertData("dave", 21, 1, 1); // true, true
+        //CreateSave();
+        LoadSave();
         //DeleteScore();
-        ShowScores(); 
+        ShowScores();
         
 	}
+
+    private void Update()
+    {
+        if (Input.GetButton("Fire1"))
+        {
+            LoadSave();
+            buySkin1();
+            LoadSave();
+        }
+    }
 
     private void CreateDataBase()
     {
@@ -56,7 +72,10 @@ public class Database : MonoBehaviour {
                 dbConnection.Close();
             }
         }
-            }
+    }
+
+
+
     private void GetScores()
     {
         dataList.Clear();
@@ -121,4 +140,88 @@ public class Database : MonoBehaviour {
         InsertData(name, score, 0, 0);
         //GetScores();
     }
+
+    public void CreateSave()
+    {
+        Debug.Log("save created");
+        InsertData("skin", 0, 0, 0);
+    }
+
+    public void LoadSave()
+    {
+        dataList.Clear();
+        using (IDbConnection dbConnection = new SqliteConnection(connectionString))
+        {
+            dbConnection.Open();
+
+            using (IDbCommand dbCmd = dbConnection.CreateCommand())
+            {
+                string sqlQuery = "SELECT * FROM PlayerData WHERE PlayerID = 59";
+
+                dbCmd.CommandText = sqlQuery;
+
+                using (IDataReader reader = dbCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        //Debug.Log(reader.GetString(1) + " - " + reader.GetFloat(2) + " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)); //+ " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)
+                        dataList.Add(new DataHolder(reader.GetFloat(0), reader.GetString(1), reader.GetFloat(2), reader.GetFloat(3), reader.GetFloat(4)));
+                    }
+                    dbConnection.Close();
+                    reader.Close();
+                }
+            }
+        }
+
+        DataHolder tmpScore = dataList[0];
+        float skin1 = tmpScore.Skin1Unlock;
+        float skin2 = tmpScore.Skin2Unlock;
+
+        skin1unlocked = skin1;
+        skin2unlocked = skin2;
+
+        Debug.Log("skin1 " + skin1.ToString());
+        Debug.Log("skin2 " + skin2.ToString());
+
+       // return tmpScore;
+    }
+
+    public void SaveOverwrite()
+    {
+        using (IDbConnection dbConnection = new SqliteConnection(connectionString))
+        {
+            dbConnection.Open();
+
+            using (IDbCommand dbCmd = dbConnection.CreateCommand())
+            {
+                //string sqlQuery = String.Format("INSERT INTO PlayerData(Name,HighScore,Skin1Unlock,Skin2Unlock) VALUES(\"{0}\", \"{1}\", \"{2}\", \"{3}\")", name, newScore, Skin1Unlock, Skin2Unlock); // \"{2}\", \"{3}\" ,Skin1Unlock,Skin2Unlock
+                string sqlQuery = String.Format("UPDATE PlayerData Set Skin1Unlock = \"{0}\", Skin2Unlock = \"{1}\" WHERE PlayerID = 59; ", skin1unlocked, skin2unlocked);
+
+                dbCmd.CommandText = sqlQuery;
+                dbCmd.ExecuteScalar();
+                dbConnection.Close();
+            }
+        }
+    }
+
+    public void buySkin1()
+    {
+        skin1unlocked = 1;
+        SaveOverwrite();
+    }
+
+    public void buySkin2()
+    {
+        skin1unlocked = 1;
+        SaveOverwrite();
+    }
+
+    public void ResetSkinsBought()
+    {
+        skin1unlocked = 0;
+        skin2unlocked = 0;
+        SaveOverwrite();
+    }
 }
+
+
