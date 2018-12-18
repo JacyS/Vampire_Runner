@@ -14,10 +14,13 @@ public class Database : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        connectionString = "URI=file:" + Application.persistentDataPath + "/" + "Database.s3db";
+        connectionString = "URI=file:" + Application.dataPath + "/" + "Database.s3db"; //Only use this for the windows build and use in the editor, I don't know why they dont work interchangeably but I don't care because it's a simple workaround.
+        //connectionString = "URI=file:" + Application.persistentDataPath + "/" + "Database.s3db"; - THIS MUST BE SET BEFORE THE ANDROID BUILD, AS IT IS THE ONLY WAY IT WILL WORK PROPERLY IN UNITY
         CreateDataBase();
-        InsertData("dave", 19, 1, 1); // true, true
+        InsertData("dave", 21, 1, 1); // true, true
+        //DeleteScore();
         ShowScores(); 
+        
 	}
 
     private void CreateDataBase()
@@ -106,7 +109,7 @@ public class Database : MonoBehaviour {
 
             DataHolder tmpScore = dataList[i];
 
-            tmpObjec.GetComponent<HighScoreScript>().SetScore(tmpScore.Name, tmpScore.HighScore.ToString(), "#" + (i + 1).ToString());
+            tmpObjec.GetComponent<HighScoreScript>().SetScore(tmpScore.Name, tmpScore.HighScore.ToString(), "#" + (i + 2).ToString());
             tmpObjec.transform.SetParent(scoreParent);
             tmpObjec.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         }

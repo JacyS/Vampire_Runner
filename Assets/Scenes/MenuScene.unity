@@ -230,6 +230,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 419531ed8f74d6648a313df55e968f0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinsCurrency: {fileID: 0}
+  batcoinsCurrency: {fileID: 0}
+  coins: 0
+  batcoins: 0
+  skin1CoinsText: {fileID: 0}
+  skin1BatsText: {fileID: 0}
+  skin2CoinsText: {fileID: 0}
+  skin2BatsText: {fileID: 0}
+  skin1Coins: 5000
+  skin1Bats: 500
+  skin2Coins: 7500
+  skin2Bats: 750
+  skin1CoinButton: {fileID: 0}
+  skin1BatButton: {fileID: 0}
+  skin2CoinButton: {fileID: 0}
+  skin2BatButton: {fileID: 0}
 --- !u!224 &49746215
 RectTransform:
   m_ObjectHideFlags: 0
