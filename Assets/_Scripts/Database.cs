@@ -14,15 +14,29 @@ public class Database : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        connectionString = "URI=file:" + Application.dataPath + "/Database.s3db";
-        //InsertData("dave", 19, 1, 1); // true, true
+        connectionString = "URI=file:" + Application.persistentDataPath + "/" + "Database.s3db";
+        CreateDataBase();
+        InsertData("dave", 19, 1, 1); // true, true
         ShowScores(); 
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    private void CreateDataBase()
+    {
+        IDbConnection dbcon = new SqliteConnection(connectionString);
+        dbcon.Open();
+        IDbCommand dbcmd;
+        IDataReader reader;
+
+        dbcmd = dbcon.CreateCommand();
+        string q_createTable =
+          "CREATE TABLE IF NOT EXISTS " + "PlayerData" + " (" +
+          "PlayerID" + " INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+          "Name" + " TEXT  NOT NULL, " + "HighScore" + " FLOAT  NOT NULL, " + "Skin1Unlock" + " BOOLEAN DEFAULT '0' NOT NULL, " + "Skin2Unlock" + " BOOLEAN DEFAULT '0' NOT NULL)";
+
+        dbcmd.CommandText = q_createTable;
+        reader = dbcmd.ExecuteReader();
+    }//the database and table creation code
+
 
     private void InsertData(string name, float newScore, int Skin1Unlock, int Skin2Unlock) // bool Skin1Unlock, bool Skin2Unlock
     {
