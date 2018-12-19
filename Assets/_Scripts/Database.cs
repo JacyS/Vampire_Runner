@@ -21,9 +21,9 @@ public class Database : MonoBehaviour {
         connectionString = "URI=file:" + Application.dataPath + "/" + "Database.s3db"; //Only use this for the windows build and use in the editor, I don't know why they dont work interchangeably but I don't care because it's a simple workaround.
         //connectionString = "URI=file:" + Application.persistentDataPath + "/" + "Database.s3db"; - THIS MUST BE SET BEFORE THE ANDROID BUILD, AS IT IS THE ONLY WAY IT WILL WORK PROPERLY IN UNITY
         CreateDataBase();
-        InsertData("dave", 21, 1, 1); // true, true
+       // InsertData("bave", 43, 1, 1); // true, true
         //CreateSave();
-        LoadSave();
+        //LoadSave();
         //DeleteScore();
         ShowScores();
         
@@ -31,12 +31,12 @@ public class Database : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetButton("Fire1"))
-        {
-            LoadSave();
-            buySkin1();
-            LoadSave();
-        }
+        //if (Input.GetButton("Fire1"))
+        //{
+          //  LoadSave();
+         //   buySkin1();
+        //    LoadSave();
+       // }
     }
 
     private void CreateDataBase()
@@ -101,6 +101,7 @@ public class Database : MonoBehaviour {
                 }
             }
         }
+        dataList.Sort();
     }
 
     private void DeleteScore(int id)
@@ -128,7 +129,7 @@ public class Database : MonoBehaviour {
 
             DataHolder tmpScore = dataList[i];
 
-            tmpObjec.GetComponent<HighScoreScript>().SetScore(tmpScore.Name, tmpScore.HighScore.ToString(), "#" + (i + 2).ToString());
+            tmpObjec.GetComponent<HighScoreScript>().SetScore(tmpScore.Name, tmpScore.HighScore.ToString(), "#" + (i + 1).ToString());
             tmpObjec.transform.SetParent(scoreParent);
             tmpObjec.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         }
@@ -141,50 +142,52 @@ public class Database : MonoBehaviour {
         //GetScores();
     }
 
-    public void CreateSave()
-    {
-        Debug.Log("save created");
-        InsertData("skin", 0, 0, 0);
-    }
+    // broken, plz fix.
 
-    public void LoadSave()
-    {
-        dataList.Clear();
-        using (IDbConnection dbConnection = new SqliteConnection(connectionString))
-        {
-            dbConnection.Open();
+   // public void CreateSave()
+   // {
+  //      Debug.Log("save created");
+   //     InsertData("skin", 0, 0, 0);
+  //  }
 
-            using (IDbCommand dbCmd = dbConnection.CreateCommand())
-            {
-                string sqlQuery = "SELECT * FROM PlayerData WHERE PlayerID = 59";
-
-                dbCmd.CommandText = sqlQuery;
-
-                using (IDataReader reader = dbCmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
+    //public void LoadSave()
+   // {
+    //    dataList.Clear();
+     //   using (IDbConnection dbConnection = new SqliteConnection(connectionString))
+     //   {
+      //      dbConnection.Open();
+//
+     //       using (IDbCommand dbCmd = dbConnection.CreateCommand())
+     //       {
+     //           string sqlQuery = "SELECT * FROM PlayerData WHERE PlayerID = 59";
+     //
+      //          dbCmd.CommandText = sqlQuery;
+//
+     //           using (IDataReader reader = dbCmd.ExecuteReader())
+      //          {
+      //              while (reader.Read())
+         //           {
                         //Debug.Log(reader.GetString(1) + " - " + reader.GetFloat(2) + " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)); //+ " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)
-                        dataList.Add(new DataHolder(reader.GetFloat(0), reader.GetString(1), reader.GetFloat(2), reader.GetFloat(3), reader.GetFloat(4)));
-                    }
-                    dbConnection.Close();
-                    reader.Close();
-                }
-            }
-        }
+       //               dataList.Add(new DataHolder(reader.GetFloat(0), reader.GetString(1), reader.GetFloat(2), reader.GetFloat(3), reader.GetFloat(4)));
+         //           }
+       //             dbConnection.Close();
+      //              reader.Close();
+          //      }
+        //    }
+      //  }
 
-        DataHolder tmpScore = dataList[0];
-        float skin1 = tmpScore.Skin1Unlock;
-        float skin2 = tmpScore.Skin2Unlock;
+       // DataHolder tmpScore = dataList[0];
+        //float skin1 = tmpScore.Skin1Unlock;
+       // float skin2 = tmpScore.Skin2Unlock;
 
-        skin1unlocked = skin1;
-        skin2unlocked = skin2;
+       // skin1unlocked = skin1;
+        //skin2unlocked = skin2;
 
-        Debug.Log("skin1 " + skin1.ToString());
-        Debug.Log("skin2 " + skin2.ToString());
+      //  Debug.Log("skin1 " + skin1.ToString());
+      //  Debug.Log("skin2 " + skin2.ToString());
 
        // return tmpScore;
-    }
+   // }
 
     public void SaveOverwrite()
     {
