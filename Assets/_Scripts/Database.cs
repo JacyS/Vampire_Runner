@@ -11,7 +11,7 @@ public class Database : MonoBehaviour {
     private List<DataHolder> dataList = new List<DataHolder>();
     public GameObject scorePrefab;
     public Transform scoreParent;
-
+    public int scoreLimit;
 
     public float skin1unlocked = 0;
     public float skin2unlocked = 0;
@@ -21,7 +21,9 @@ public class Database : MonoBehaviour {
         connectionString = "URI=file:" + Application.dataPath + "/" + "Database.s3db"; //Only use this for the windows build and use in the editor, I don't know why they dont work interchangeably but I don't care because it's a simple workaround.
         //connectionString = "URI=file:" + Application.persistentDataPath + "/" + "Database.s3db"; - THIS MUST BE SET BEFORE THE ANDROID BUILD, AS IT IS THE ONLY WAY IT WILL WORK PROPERLY IN UNITY
         CreateDataBase();
-       // InsertData("bave", 43, 1, 1); // true, true
+        DeleteExtraScore();
+        InsertData("test", 4334, 1, 1);
+        // true, true
         //CreateSave();
         //LoadSave();
         //DeleteScore();
@@ -61,15 +63,28 @@ public class Database : MonoBehaviour {
     {
         using (IDbConnection dbConnection = new SqliteConnection(connectionString))
         {
-            dbConnection.Open();
-
-            using (IDbCommand dbCmd = dbConnection.CreateCommand())
+            GetScores();
+            int hsCount = dataList.Count;
+            if (dataList.Count > 0)
             {
-                string sqlQuery = String.Format ("INSERT INTO PlayerData(Name,HighScore,Skin1Unlock,Skin2Unlock) VALUES(\"{0}\", \"{1}\", \"{2}\", \"{3}\")", name,newScore,Skin1Unlock,Skin2Unlock); // \"{2}\", \"{3}\" ,Skin1Unlock,Skin2Unlock
+                DataHolder lowestScore = dataList[dataList.Count - 1];
+                if (lowestScore != null && scoreLimit > 0 && dataList.Count >= scoreLimit && newScore > lowestScore.HighScore)
+                {
+                    DeleteScore(lowestScore.ID);
+                    hsCount--;
+                }
+            }
+            if (hsCount < scoreLimit)
+            {
+                using (IDbCommand dbCmd = dbConnection.CreateCommand())
+                {
+                    dbConnection.Open();
+                    string sqlQuery = String.Format("INSERT INTO PlayerData(Name,HighScore,Skin1Unlock,Skin2Unlock) VALUES(\"{0}\", \"{1}\", \"{2}\", \"{3}\")", name, newScore, Skin1Unlock, Skin2Unlock); // \"{2}\", \"{3}\" ,Skin1Unlock,Skin2Unlock
 
-                dbCmd.CommandText = sqlQuery;
-                dbCmd.ExecuteScalar();
-                dbConnection.Close();
+                    dbCmd.CommandText = sqlQuery;
+                    dbCmd.ExecuteScalar();
+                    dbConnection.Close();
+                }
             }
         }
     }
@@ -94,7 +109,7 @@ public class Database : MonoBehaviour {
                     while (reader.Read())
                     {
                         //Debug.Log(reader.GetString(1) + " - " + reader.GetFloat(2) + " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)); //+ " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)
-                        dataList.Add(new DataHolder(reader.GetFloat(0), reader.GetString(1), reader.GetFloat(2), reader.GetFloat(3), reader.GetFloat(4)));
+                        dataList.Add(new DataHolder(reader.GetInt16(0), reader.GetString(1), reader.GetFloat(2), reader.GetFloat(3), reader.GetFloat(4)));
                     }
                     dbConnection.Close();
                     reader.Close();
@@ -224,6 +239,32 @@ public class Database : MonoBehaviour {
         skin1unlocked = 0;
         skin2unlocked = 0;
         SaveOverwrite();
+    }
+    private void DeleteExtraScore()
+    {
+        GetScores();
+        if (scoreLimit <= dataList.Count)
+        {
+            int deleteCount = dataList.Count - scoreLimit;
+            dataList.Reverse();
+
+            using (IDbConnection dbConnection = new SqliteConnection(connectionString))
+            {
+                dbConnection.Open();
+
+                using (IDbCommand dbCmd = dbConnection.CreateCommand())
+                {
+                    for (int i = 0; i < deleteCount; i++)
+                    {
+                        string sqlQuery = String.Format("DELETE FROM PlayerData WHERE PlayerID = \"{0}\"", dataList[i].ID);
+
+                        dbCmd.CommandText = sqlQuery;
+                        dbCmd.ExecuteScalar();
+                    }
+                    dbConnection.Close();
+                }
+            }
+        }
     }
 }
 

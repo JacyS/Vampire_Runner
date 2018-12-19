@@ -7,7 +7,7 @@ using System;
 using UnityEngine;
 
 public class DataHolder : IComparable<DataHolder>  {
-    public float ID { get; set; }
+    public int ID { get; set; }
 
     public float HighScore { get; set; }
 
@@ -17,7 +17,7 @@ public class DataHolder : IComparable<DataHolder>  {
 
     public float Skin2Unlock { get; set; }
 
-    public DataHolder(float id, string name, float highScore,   float skin1Unlock, float skin2Unlock)
+    public DataHolder(int id, string name, float highScore,   float skin1Unlock, float skin2Unlock)
     {
         this.HighScore = highScore;
         this.Name = name;
