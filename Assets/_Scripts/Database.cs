@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Data;
 using Mono.Data.Sqlite;
+using UnityEngine.UI;
 
 public class Database : MonoBehaviour {
 
@@ -12,7 +13,9 @@ public class Database : MonoBehaviour {
     public GameObject scorePrefab;
     public Transform scoreParent;
     public int scoreLimit;
-
+    public InputField enterName;
+    public GameObject nameDialogue;
+    public GameObject highScoreTable;
     public float skin1unlocked = 0;
     public float skin2unlocked = 0;
 
@@ -22,7 +25,7 @@ public class Database : MonoBehaviour {
         //connectionString = "URI=file:" + Application.persistentDataPath + "/" + "Database.s3db";// - THIS MUST BE SET BEFORE THE ANDROID BUILD, AS IT IS THE ONLY WAY IT WILL WORK PROPERLY IN UNITY
         CreateDataBase();
         DeleteExtraScore();
-        InsertData("test", 4334, 1, 1);
+        //InsertData("test", 4334, 1, 1);
         // true, true
         //CreateSave();
         //LoadSave();
@@ -33,6 +36,7 @@ public class Database : MonoBehaviour {
 
     private void Update()
     {
+        
         //if (Input.GetButton("Fire1"))
         //{
           //  LoadSave();
@@ -41,6 +45,24 @@ public class Database : MonoBehaviour {
        // }
     }
 
+    public void EnterName()
+    {
+        if (enterName.text != string.Empty)
+        {
+            float score = UnityEngine.Random.Range(1, 500); // replace this with the actual score that is found on the death of a player
+            InsertData(enterName.text, score, 0 , 0); // add in the function that determines is a certain skin is unlocked and replace that function for each of the skin unlock variables
+            enterName.text = string.Empty;
+
+            ShowScores();
+            
+        }
+       
+    }
+    public void CloseNameDialogue()
+    {
+        nameDialogue.SetActive(false);
+
+    }
     private void CreateDataBase()
     {
         IDbConnection dbcon = new SqliteConnection(connectionString);
@@ -138,6 +160,11 @@ public class Database : MonoBehaviour {
     private void ShowScores()
     {
         GetScores();
+
+        foreach (GameObject score in GameObject.FindGameObjectsWithTag("Score"))
+        {
+            Destroy(score);
+        }
         for (int i = 0; i < dataList.Count; i++)
         {
             GameObject tmpObjec = Instantiate(scorePrefab);

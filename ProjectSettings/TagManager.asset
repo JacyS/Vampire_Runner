@@ -9,6 +9,7 @@ TagManager:
   - return_from_bat
   - coin_pickup
   - powerup
+  - Score
   layers:
   - Default
   - TransparentFX
