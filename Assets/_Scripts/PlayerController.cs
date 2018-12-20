@@ -316,6 +316,7 @@ public class PlayerController : MonoBehaviour {
             //save score to database manager
             //string player_name = "test_player";
             //GameObject.Find("DatabaseManager").GetComponent<Database>().SaveScore(player_name, score, runs_coins);
+            GameObject.Find("DatabaseManager").GetComponent<Database>().SendScore(score);
         }
 
         if (has_resurrect)

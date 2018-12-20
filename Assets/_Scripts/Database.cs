@@ -19,6 +19,8 @@ public class Database : MonoBehaviour {
     public float skin1unlocked = 0;
     public float skin2unlocked = 0;
 
+    float this_runs_score;
+
 	// Use this for initialization
 	void Start () {
         connectionString = "URI=file:" + Application.dataPath + "/" + "Database.s3db"; //Only use this for the windows build and use in the editor, I don't know why they dont work interchangeably but I don't care because it's a simple workaround.
@@ -49,7 +51,7 @@ public class Database : MonoBehaviour {
     {
         if (enterName.text != string.Empty)
         {
-            float score = UnityEngine.Random.Range(1, 500); // replace this with the actual score that is found on the death of a player
+            float score = this_runs_score;//UnityEngine.Random.Range(1, 500); // replace this with the actual score that is found on the death of a player
             InsertData(enterName.text, score, 0 , 0); // add in the function that determines is a certain skin is unlocked and replace that function for each of the skin unlock variables
             enterName.text = string.Empty;
 
@@ -178,7 +180,13 @@ public class Database : MonoBehaviour {
     public void SaveScore(string name, float score, float runs_coins)
     {
         InsertData(name, score, 0, 0);
+        this_runs_score = score;
         //GetScores();
+    }
+
+    public void SendScore(float score)
+    {
+        this_runs_score = score;
     }
 
     // broken, plz fix.
