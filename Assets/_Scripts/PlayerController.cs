@@ -65,6 +65,10 @@ public class PlayerController : MonoBehaviour {
     float magnet_timer;
 
     int powerup_coin_amount = 100;
+
+    //inputs
+    Vector2 start_swipe;
+    Vector2 end_swipe;
     
 
     // Use this for initialization
@@ -230,7 +234,8 @@ public class PlayerController : MonoBehaviour {
         SlideButton = false;
 
         //Jump down
-        if (Input.GetKeyDown(KeyCode.Z)){ //add mobile input here for mobile testing later. (||) use those to define OR later, your stupid keyboard doesnt have them. 
+        if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Mouse0))
+        { //add mobile input here for mobile testing later. (||) use those to define OR later, your stupid keyboard doesnt have them. 
             JumpButton = true;
         }
 
@@ -238,6 +243,29 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKey(KeyCode.X))
         { //add mobile input here for mobile testing later. (||) use those to define OR later, your stupid keyboard doesnt have them. 
             SlideButton = true;
+        }
+
+        if (Input.touchCount == 1)
+        {
+            if (Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                start_swipe = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            }
+
+            else if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                end_swipe = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                if (Mathf.Abs(start_swipe.y) - Mathf.Abs(end_swipe.y) > 100){
+                    SlideButton = true;
+                }
+                else
+                {
+                    JumpButton = true;
+                }
+            }
+
+
         }
     }
 
