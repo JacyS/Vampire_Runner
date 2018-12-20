@@ -54,15 +54,12 @@ public class Database : MonoBehaviour {
             enterName.text = string.Empty;
 
             ShowScores();
-            
+
+            nameDialogue.SetActive(false);
         }
        
     }
-    public void CloseNameDialogue()
-    {
-        nameDialogue.SetActive(false);
-
-    }
+   
     private void CreateDataBase()
     {
         IDbConnection dbcon = new SqliteConnection(connectionString);
