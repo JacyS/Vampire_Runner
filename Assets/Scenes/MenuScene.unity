@@ -9925,7 +9925,7 @@ MonoBehaviour:
   scorePrefab: {fileID: 1950475622455998, guid: 3ea8fdd5e4f4e40459ceb4360d135c84,
     type: 2}
   scoreParent: {fileID: 218821020}
-  scoreLimit: 3
+  scoreLimit: 100
   enterName: {fileID: 0}
   nameDialogue: {fileID: 0}
   highScoreTable: {fileID: 0}

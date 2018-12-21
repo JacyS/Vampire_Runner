@@ -23,8 +23,8 @@ public class Database : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        connectionString = "URI=file:" + Application.dataPath + "/" + "Database.s3db"; //Only use this for the windows build and use in the editor, I don't know why they dont work interchangeably but I don't care because it's a simple workaround.
-        //connectionString = "URI=file:" + Application.persistentDataPath + "/" + "Database.s3db";// - THIS MUST BE SET BEFORE THE ANDROID BUILD, AS IT IS THE ONLY WAY IT WILL WORK PROPERLY IN UNITY
+        //connectionString = "URI=file:" + Application.dataPath + "/" + "Database.s3db"; //Only use this for the windows build and use in the editor, I don't know why they dont work interchangeably but I don't care because it's a simple workaround.
+        connectionString = "URI=file:" + Application.persistentDataPath + "/" + "Database.s3db";// - THIS MUST BE SET BEFORE THE ANDROID BUILD, AS IT IS THE ONLY WAY IT WILL WORK PROPERLY IN UNITY
         CreateDataBase();
         DeleteExtraScore();
         //InsertData("test", 4334, 1, 1);
