@@ -17,13 +17,28 @@ public class DataHolder : IComparable<DataHolder>  {
 
     public float Skin2Unlock { get; set; }
 
-    public DataHolder(int id, string name, float highScore,   float skin1Unlock, float skin2Unlock)
+    public int SetSkin { get; set; }
+
+    public int CoinsOwned { get; set; }
+
+    public int RezPowerUpsOwned { get; set; }
+
+    public int TimePowerUpsOwned { get; set; }
+
+    public int BatCoinsOwned { get; set; }
+    public DataHolder(int id, string name, float highScore,   float skin1Unlock, float skin2Unlock, int setSkin, int coinsOwned, int batCoinsOwned, int rezPowerUpsOwned, int timePowerUpsOwned)
     {
         this.HighScore = highScore;
         this.Name = name;
         this.ID = id;
         this.Skin1Unlock = skin1Unlock;
         this.Skin2Unlock = skin2Unlock;
+        this.SetSkin = setSkin;
+        this.CoinsOwned = coinsOwned;
+        this.BatCoinsOwned = batCoinsOwned;
+        this.RezPowerUpsOwned = rezPowerUpsOwned;
+        this.TimePowerUpsOwned = timePowerUpsOwned;
+
     }
     public int CompareTo(DataHolder other)
     {
