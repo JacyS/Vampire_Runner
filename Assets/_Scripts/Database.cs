@@ -19,8 +19,6 @@ public class Database : MonoBehaviour {
     public float skin1unlocked = 0;
     public float skin2unlocked = 0;
 
-    float this_runs_score;
-
 	// Use this for initialization
 	void Start () {
         connectionString = "URI=file:" + Application.dataPath + "/" + "Database.s3db"; //Only use this for the windows build and use in the editor, I don't know why they dont work interchangeably but I don't care because it's a simple workaround.
@@ -51,8 +49,8 @@ public class Database : MonoBehaviour {
     {
         if (enterName.text != string.Empty)
         {
-            float score = this_runs_score;//UnityEngine.Random.Range(1, 500); // replace this with the actual score that is found on the death of a player
-            InsertData(enterName.text, score, 0 , 0, 100 ,200, 300, 400, 500); //Read Comments below for variable meanings.
+            float score = UnityEngine.Random.Range(1, 500); // replace this with the actual score that is found on the death of a player
+            InsertData(enterName.text, score, 0 , 0); // add in the function that determines is a certain skin is unlocked and replace that function for each of the skin unlock variables
             enterName.text = string.Empty;
 
             ShowScores();
@@ -61,13 +59,7 @@ public class Database : MonoBehaviour {
         }
        
     }
-    // 100 = Skin that is set, so assign a number value for each skin from 0-3, using the highest ID from the DataHolder datalist, 
-    //the same can be pretty much said for all of these and the skin unlocks.
-    //200 = amount of coins owned
-    //300 = amount of batcoins owned
-    //400 = amount of Rez Powerups Owned
-    //500 = amount of Time Powerups Owned
-
+   
     private void CreateDataBase()
     {
         IDbConnection dbcon = new SqliteConnection(connectionString);
@@ -79,15 +71,14 @@ public class Database : MonoBehaviour {
         string q_createTable =
           "CREATE TABLE IF NOT EXISTS " + "PlayerData" + " (" +
           "PlayerID" + " INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-          "Name" + " TEXT  NOT NULL, " + "HighScore" + " FLOAT  NOT NULL, " + "Skin1Unlock" + " BOOLEAN DEFAULT '0' NOT NULL, " + "Skin2Unlock" + " BOOLEAN DEFAULT '0' NOT NULL," + "SkinSet" + " INTEGER DEFAULT '0' NOT NULL," + "CoinsOwned" + " INTEGER DEFAULT '0' NOT NULL," 
-          + "BatCoinsOwned" + " INTEGER DEFAULT '0' NOT NULL," + "RezPowerUpsOwned" + " INTEGER DEFAULT '0' NOT NULL," + "TimePowerUpsOwned" + " INTEGER DEFAULT '0' NOT NULL)";
+          "Name" + " TEXT  NOT NULL, " + "HighScore" + " FLOAT  NOT NULL, " + "Skin1Unlock" + " BOOLEAN DEFAULT '0' NOT NULL, " + "Skin2Unlock" + " BOOLEAN DEFAULT '0' NOT NULL)";
 
         dbcmd.CommandText = q_createTable;
         reader = dbcmd.ExecuteReader();
     }//the database and table creation code
 
 
-    private void InsertData(string name, float newScore, int Skin1Unlock, int Skin2Unlock, int SkinSet, int CoinsOwned, int BatCoinsOwned, int RezPowerUpsOwned, int TimePowerUpsOwned) // bool Skin1Unlock, bool Skin2Unlock
+    private void InsertData(string name, float newScore, int Skin1Unlock, int Skin2Unlock) // bool Skin1Unlock, bool Skin2Unlock
     {
         using (IDbConnection dbConnection = new SqliteConnection(connectionString))
         {
@@ -107,7 +98,7 @@ public class Database : MonoBehaviour {
                 using (IDbCommand dbCmd = dbConnection.CreateCommand())
                 {
                     dbConnection.Open();
-                    string sqlQuery = String.Format("INSERT INTO PlayerData(Name,HighScore,Skin1Unlock,Skin2Unlock, SkinSet, CoinsOwned, BatCoinsOwned, RezPowerUpsOwned, TimePowerUpsOwned) VALUES(\"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\",\"{5}\", \"{6}\", \"{7}\", \"{8}\")", name, newScore, Skin1Unlock, Skin2Unlock, SkinSet, CoinsOwned, BatCoinsOwned, RezPowerUpsOwned, TimePowerUpsOwned); // \"{2}\", \"{3}\" ,Skin1Unlock,Skin2Unlock
+                    string sqlQuery = String.Format("INSERT INTO PlayerData(Name,HighScore,Skin1Unlock,Skin2Unlock) VALUES(\"{0}\", \"{1}\", \"{2}\", \"{3}\")", name, newScore, Skin1Unlock, Skin2Unlock); // \"{2}\", \"{3}\" ,Skin1Unlock,Skin2Unlock
 
                     dbCmd.CommandText = sqlQuery;
                     dbCmd.ExecuteScalar();
@@ -137,7 +128,7 @@ public class Database : MonoBehaviour {
                     while (reader.Read())
                     {
                         //Debug.Log(reader.GetString(1) + " - " + reader.GetFloat(2) + " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)); //+ " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)
-                        dataList.Add(new DataHolder(reader.GetInt16(0), reader.GetString(1), reader.GetFloat(2), reader.GetFloat(3), reader.GetFloat(4), reader.GetInt16(5), reader.GetInt16(6), reader.GetInt16(7), reader.GetInt16(8), reader.GetInt16(9)));
+                        dataList.Add(new DataHolder(reader.GetInt16(0), reader.GetString(1), reader.GetFloat(2), reader.GetFloat(3), reader.GetFloat(4)));
                     }
                     dbConnection.Close();
                     reader.Close();
@@ -186,14 +177,8 @@ public class Database : MonoBehaviour {
 
     public void SaveScore(string name, float score, float runs_coins)
     {
-        InsertData(name, score, 0, 0, 0, 0, 0, 0, 0);
-        this_runs_score = score;
+        InsertData(name, score, 0, 0);
         //GetScores();
-    }
-
-    public void SendScore(float score)
-    {
-        this_runs_score = score;
     }
 
     // broken, plz fix.
