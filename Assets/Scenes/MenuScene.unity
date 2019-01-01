@@ -323,7 +323,6 @@ MonoBehaviour:
   coinsCurrency: {fileID: 1296901957}
   batcoinsCurrency: {fileID: 2132935121}
   coins: 0
-  batcoins: 0
   ResPowerUpsText: {fileID: 1449687313}
   ResPowerUps: 0
   TimePowerText: {fileID: 414747239}
@@ -9931,6 +9930,10 @@ MonoBehaviour:
   highScoreTable: {fileID: 0}
   skin1unlocked: 0
   skin2unlocked: 0
+  coinsowned: 0
+  batcoinsowned: 0
+  rezowned: 0
+  timeowned: 0
 --- !u!224 &2120451934
 RectTransform:
   m_ObjectHideFlags: 0

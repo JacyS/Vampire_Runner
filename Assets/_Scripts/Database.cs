@@ -16,8 +16,13 @@ public class Database : MonoBehaviour {
     public InputField enterName;
     public GameObject nameDialogue;
     public GameObject highScoreTable;
+
     public float skin1unlocked = 0;
     public float skin2unlocked = 0;
+    public float coinsowned = 0;
+    public float batcoinsowned = 0;
+    public float rezowned = 0;
+    public float timeowned = 0;
 
     float this_runs_score;
 
@@ -57,6 +62,8 @@ public class Database : MonoBehaviour {
             InsertData(enterName.text, score, 0 , 0, 100 ,200, 300, 400, 500); //Read Comments below for variable meanings.
             enterName.text = string.Empty;
 
+            SaveScore(enterName.text,score, 0);
+
             ShowScores();
 
             nameDialogue.SetActive(false);
@@ -88,7 +95,6 @@ public class Database : MonoBehaviour {
         dbcmd.CommandText = q_createTable;
         reader = dbcmd.ExecuteReader();
     }//the database and table creation code
-
 
     private void InsertData(string name, float newScore, int Skin1Unlock, int Skin2Unlock, int SkinSet, int CoinsOwned, int BatCoinsOwned, int RezPowerUpsOwned, int TimePowerUpsOwned) // bool Skin1Unlock, bool Skin2Unlock
     {
@@ -307,12 +313,21 @@ public class Database : MonoBehaviour {
         DataHolder tmpScore = dataList[(int)FindHighestIDColumn()];
         //Debug.Log("temp score " + tmpScore.HighScore.ToString());
 
+        //this happens here each time so that when we overwrite we can LoadSave first then overwrite what we want using the below script variabels
+        coinsowned = tmpScore.CoinsOwned;
+        rezowned = tmpScore.RezPowerUpsOwned;
+        timeowned = tmpScore.TimePowerUpsOwned;
+        batcoinsowned = tmpScore.BatCoinsOwned;
+        skin1unlocked = tmpScore.Skin1Unlock;
+        skin2unlocked = tmpScore.Skin2Unlock;
+
         return tmpScore;
 
     }
 
     public void SaveOverwrite()
     {
+
         using (IDbConnection dbConnection = new SqliteConnection(connectionString))
         {
             dbConnection.Open();
@@ -320,7 +335,7 @@ public class Database : MonoBehaviour {
             using (IDbCommand dbCmd = dbConnection.CreateCommand())
             {
                 //string sqlQuery = String.Format("INSERT INTO PlayerData(Name,HighScore,Skin1Unlock,Skin2Unlock) VALUES(\"{0}\", \"{1}\", \"{2}\", \"{3}\")", name, newScore, Skin1Unlock, Skin2Unlock); // \"{2}\", \"{3}\" ,Skin1Unlock,Skin2Unlock
-                string sqlQuery = String.Format("UPDATE PlayerData Set Skin1Unlock = \"{0}\", Skin2Unlock = \"{1}\" WHERE PlayerID = \"{2}\"; ", skin1unlocked, skin2unlocked, FindHighestID());
+                string sqlQuery = String.Format("UPDATE PlayerData Set Skin1Unlock = \"{0}\", Skin2Unlock = \"{1}\", BatCoinsOwned = \"{3}\", CoinsOwned = \"{4}\" , TimePowerUpsOwned = \"{5}\" , RezPowerUpsOwned = \"{6}\" ,  WHERE PlayerID = \"{2}\"; ", skin1unlocked, skin2unlocked, FindHighestID(),batcoinsowned, coinsowned, timeowned, rezowned);
 
                 dbCmd.CommandText = sqlQuery;
                 dbCmd.ExecuteScalar();
@@ -331,14 +346,30 @@ public class Database : MonoBehaviour {
 
     public void buySkin1()
     {
+        LoadSave();
         skin1unlocked = 1;
         SaveOverwrite();
     }
 
     public void buySkin2()
     {
+        LoadSave();
         skin1unlocked = 1;
         SaveOverwrite();
+    }
+
+    public void buyBatCoins(float batcoinamount)
+    {
+        LoadSave();
+        batcoinsowned = batcoinamount;
+        SaveOverwrite();
+    }
+
+    public float GetBatCoins()
+    {
+        LoadSave();
+        batcoinsowned = 100;
+        return batcoinsowned;
     }
 
     public void ResetSkinsBought()

@@ -9,7 +9,7 @@ public class StoreController : MonoBehaviour
     public Text coinsCurrency;
     public Text batcoinsCurrency;
     public float coins;
-    public float batcoins;
+    float batcoins;//not public
 
     //PowerUps
 
@@ -75,12 +75,26 @@ public class StoreController : MonoBehaviour
         skin2BatsText.text = skin2Bats + " BatCoins";
     }
 
+    /* void Start()
+     {
+         DatabaseManager = GameObject.Find("DatabaseManager");
+
+         Skin1Bought = DatabaseManager.GetComponent<Database>().skin1unlocked;
+         Skin2Bought = DatabaseManager.GetComponent<Database>().skin2unlocked;
+         batcoins = DatabaseManager.GetComponent<Database>().GetBatCoins();
+
+         Debug.Log("batcoins " + batcoins.ToString());
+     }*/
+
     private void Start()
     {
         DatabaseManager = GameObject.Find("DatabaseManager");
 
         Skin1Bought = DatabaseManager.GetComponent<Database>().skin1unlocked;
         Skin2Bought = DatabaseManager.GetComponent<Database>().skin2unlocked;
+        batcoins = DatabaseManager.GetComponent<Database>().GetBatCoins();
+
+        Debug.Log("batcoins " + batcoins.ToString());// I don't know why this code isn't running!
     }
 
     void Update()
@@ -239,6 +253,7 @@ public class StoreController : MonoBehaviour
     public void CurrencyPack1()
     {
         batcoins = batcoins + 500;
+        DatabaseManager.GetComponent<Database>().buyBatCoins(batcoins);
     }
     public void CurrencyPack2()
     {
