@@ -33,7 +33,9 @@ public class Database : MonoBehaviour {
         //LoadSave();
         //DeleteScore();
         ShowScores();
-        
+
+        DataHolder current = LoadSave();
+        Debug.Log("current save score " +current.HighScore.ToString());
 	}
 
     private void Update()
@@ -61,6 +63,7 @@ public class Database : MonoBehaviour {
         }
        
     }
+    //3rd and 4th numbers (0's) are the skin unlocks
     // 100 = Skin that is set, so assign a number value for each skin from 0-3, using the highest ID from the DataHolder datalist, 
     //the same can be pretty much said for all of these and the skin unlocks.
     //200 = amount of coins owned
@@ -115,6 +118,39 @@ public class Database : MonoBehaviour {
                 }
             }
         }
+    }
+
+    float FindHighestID()
+    {
+
+        using (IDbConnection dbConnection = new SqliteConnection(connectionString))
+        {
+
+            float currentHighest = 0;
+            int position = 0;
+            
+            GetScores();
+            int hsCount = dataList.Count;
+
+            if (dataList.Count > 0)
+            {
+                DataHolder lowestScore = dataList[dataList.Count - 1];
+
+                for (int i = 0; i < dataList.Count; i++)//loop through list and find the one with the highest id value.
+                {
+                    DataHolder current = dataList[i];
+                    if (current.ID > currentHighest)
+                    {
+                        currentHighest = current.ID;
+                        position = i;
+                    }
+                }
+                return position;//currentHighest;
+            }
+        }
+
+        return 0;//else return 0
+
     }
 
 
@@ -186,9 +222,11 @@ public class Database : MonoBehaviour {
 
     public void SaveScore(string name, float score, float runs_coins)
     {
-        InsertData(name, score, 0, 0, 0, 0, 0, 0, 0);
+        DataHolder tmp = LoadSave();
+        InsertData(name, score, (int)tmp.Skin1Unlock, (int)tmp.Skin2Unlock, tmp.SetSkin, tmp.CoinsOwned, tmp.BatCoinsOwned, tmp.RezPowerUpsOwned, tmp.TimePowerUpsOwned);
         this_runs_score = score;
         //GetScores();
+
     }
 
     public void SendScore(float score)
@@ -198,50 +236,46 @@ public class Database : MonoBehaviour {
 
     // broken, plz fix.
 
-   // public void CreateSave()
-   // {
-  //      Debug.Log("save created");
-   //     InsertData("skin", 0, 0, 0);
-  //  }
+    public void CreateSave()
+    {
+        //Debug.Log("save created");
+        //InsertData("skin", 0, 0, 0);
+    }
 
-    //public void LoadSave()
-   // {
-    //    dataList.Clear();
-     //   using (IDbConnection dbConnection = new SqliteConnection(connectionString))
-     //   {
-      //      dbConnection.Open();
-//
-     //       using (IDbCommand dbCmd = dbConnection.CreateCommand())
-     //       {
-     //           string sqlQuery = "SELECT * FROM PlayerData WHERE PlayerID = 59";
-     //
-      //          dbCmd.CommandText = sqlQuery;
-//
-     //           using (IDataReader reader = dbCmd.ExecuteReader())
-      //          {
-      //              while (reader.Read())
-         //           {
+    DataHolder LoadSave()
+    {
+        dataList.Clear();
+        using (IDbConnection dbConnection = new SqliteConnection(connectionString))
+        {
+            dbConnection.Open();
+
+            using (IDbCommand dbCmd = dbConnection.CreateCommand())
+            {
+                string sqlQuery = "SELECT * FROM PlayerData WHERE PlayerID = " + FindHighestID().ToString();//get the one
+     
+                dbCmd.CommandText = sqlQuery;
+
+                using (IDataReader reader = dbCmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        //empty here as we only need to run the sql string
                         //Debug.Log(reader.GetString(1) + " - " + reader.GetFloat(2) + " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)); //+ " - " + reader.GetBoolean(3) + " - " + reader.GetBoolean(4)
-       //               dataList.Add(new DataHolder(reader.GetFloat(0), reader.GetString(1), reader.GetFloat(2), reader.GetFloat(3), reader.GetFloat(4)));
-         //           }
-       //             dbConnection.Close();
-      //              reader.Close();
-          //      }
-        //    }
-      //  }
+                      //dataList.Add(new DataHolder(reader.GetFloat(0), reader.GetString(1), reader.GetFloat(2), reader.GetFloat(3), reader.GetFloat(4), reader.GetFloat(5), reader.GetFloat(6), reader.GetFloat(7), reader.GetFloat(8)));
+                    }
+                    dbConnection.Close();
+                    reader.Close();
+                }
+            }
+        }
 
-       // DataHolder tmpScore = dataList[0];
-        //float skin1 = tmpScore.Skin1Unlock;
-       // float skin2 = tmpScore.Skin2Unlock;
+        //this actually works by just getting the highest here, the only reason for the bit above is to get the latest verison of the database into dataholder
+        DataHolder tmpScore = dataList[(int)FindHighestID()];
+        //Debug.Log("temp score " + tmpScore.HighScore.ToString());
 
-       // skin1unlocked = skin1;
-        //skin2unlocked = skin2;
+        return tmpScore;
 
-      //  Debug.Log("skin1 " + skin1.ToString());
-      //  Debug.Log("skin2 " + skin2.ToString());
-
-       // return tmpScore;
-   // }
+    }
 
     public void SaveOverwrite()
     {
