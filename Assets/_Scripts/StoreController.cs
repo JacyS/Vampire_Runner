@@ -56,6 +56,14 @@ public class StoreController : MonoBehaviour
     float Skin1Bought = 0;
     float Skin2Bought = 0;
 
+    //Multiplier
+   public float multiplier = 1;
+    public Button Multiplier1;
+    public Button Multiplier2;
+    public Button Multiplier5;
+    public Button Multiplier10;
+
+
     GameObject DatabaseManager;
 
     void Awake()
@@ -65,10 +73,6 @@ public class StoreController : MonoBehaviour
         skin1BatsText.text = skin1Bats + " BatCoins";
         skin2CoinsText.text = skin2Coins + " Coins";
         skin2BatsText.text = skin2Bats + " BatCoins";
-        ResCoinsText.text = ResCoins + " Coins";
-        ResBatsText.text = ResBats + " BatCoins";
-        TimeCoinsText.text = TimeCoins + " Coins";
-        TimeBatsText.text = TimeBats + " BatCoins";
     }
 
     private void Start()
@@ -81,14 +85,18 @@ public class StoreController : MonoBehaviour
 
     void Update()
     {
+        //Updates amount of currency the player has
         coinsCurrency.text = "Coins: " + coins;
         batcoinsCurrency.text = "BatCoins: " + batcoins;
         ResPowerUpsText.text = "Resurrection Tokens: " + ResPowerUps;
         TimePowerText.text = "Time Tokens: " + TimePower;
+
         if (Skin1Bought == 1)
         {
+            //Disables button so the player cannot buy it twice 
             skin1CoinButton.interactable = false;
             skin1BatButton.interactable = false;
+            //changes text to purchased when it has been bought
             skin1BatsText.text = "Purchased";
             skin1CoinsText.text = "Purchased";
         }
@@ -100,15 +108,21 @@ public class StoreController : MonoBehaviour
             skin2CoinsText.text = "Purchased";
         }
 
+        //Different from wake values because multiplier and it will update throughout the game.
+        ResCoinsText.text = ResCoins * multiplier + " Coins";
+        ResBatsText.text = ResBats * multiplier + " BatCoins";
+        TimeCoinsText.text = TimeCoins * multiplier + " Coins";
+        TimeBatsText.text = TimeBats * multiplier + " BatCoins";
     }
 
     public void PurchaseSkin1Coins()
     {
+        //If the player does not have enough coins and try to purchase it will change text
         if (coins < skin1Coins)
         {
             skin1CoinsText.text = "Insufficient Coins";
         }
-        else
+        else//if they have enough will take away the coins and add the skin to the player
         {
             coins = coins - skin1Coins;
             Skin1Bought = 1;
@@ -158,67 +172,69 @@ public class StoreController : MonoBehaviour
 
     public void PurchaseResCoins()
     {
-        if (coins < ResCoins)
+        //Check if they have enough coins to purchase will the amount they want to buy with the multiplier
+        if (coins < ResCoins * multiplier)
         {
             ResCoinsText.text = "Insufficient Coins";
         }
         else
         {
-            coins = coins - ResCoins;
+            //takes away the coins with the selected multiplier value and then add the powerup when purchased with the chosen multiplier
+            coins = coins - ResCoins * multiplier;
             ResCoinsText.text = "Purchased";
-            ResPowerUps++;
+            ResPowerUps = ResPowerUps + 1 * multiplier;
            
         }
     }
 
     public void PurchaseResBats()
     {
-        if (batcoins < ResBats)
+        if (batcoins < ResBats * multiplier)
         {
             ResBatsText.text = "Insufficient BatCoins";
         }
         else
         {
-            batcoins = batcoins - ResBats;
+            batcoins = batcoins - ResBats * multiplier;
             ResBatsText.text = "Purchased";
-            ResPowerUps++;
+            ResPowerUps = ResPowerUps + 1 * multiplier;
 
         }
     }
 
     public void PurchaseTimeCoins()
     {
-        if (coins < TimeCoins)
+        if (coins < TimeCoins * multiplier)
         {
             TimeCoinsText.text = "Insufficient Coins";
         }
         else
         {
-            coins = coins - TimeCoins;
+            coins = coins - TimeCoins * multiplier;
             TimeCoinsText.text = "Purchased";
-            TimePower++;
+            TimePower = TimePower + 1 * multiplier;
 
         }
     }
 
     public void PurchaseTimeBats()
     {
-        if (batcoins < ResBats)
+        if (batcoins < ResBats * multiplier)
         {
             TimeBatsText.text = "Insufficient BatCoins";
         }
         else
         {
-            batcoins = batcoins - TimeBats;
+            batcoins = batcoins - TimeBats * multiplier;
             TimeBatsText.text = "Purchased";
-            TimePower++;
+            TimePower = TimePower + 1 * multiplier;
 
         }
     }
 
 
 
-
+    //Currency, Simple adding fake transaction when they press each button
 
     public void CurrencyPack1()
     {
@@ -233,6 +249,45 @@ public class StoreController : MonoBehaviour
         batcoins = batcoins + 5000;
     }
 
+
+    public void Multiplier1x()
+    {
+        //Setting the selected multiplier to false to see what one in enabled and making others usable
+        Multiplier1.interactable = false;
+        Multiplier2.interactable = true;
+        Multiplier5.interactable = true;
+        Multiplier10.interactable = true;
+
+        multiplier = 1;
+    }
+
+    public void Multiplier2x()
+    {
+        Multiplier1.interactable = true;
+        Multiplier2.interactable = false;
+        Multiplier5.interactable = true;
+        Multiplier10.interactable = true;
+
+        multiplier = 2;
+    }
+    public void Multiplier5x()
+    {
+        Multiplier1.interactable = true;
+        Multiplier2.interactable = true;
+        Multiplier5.interactable = false;
+        Multiplier10.interactable = true;
+
+        multiplier = 5;
+    }
+    public void Multiplier10x()
+    {
+        Multiplier1.interactable = true;
+        Multiplier2.interactable = true;
+        Multiplier5.interactable = true;
+        Multiplier10.interactable = false;
+
+        multiplier = 10;
+    }
 
 
 }
