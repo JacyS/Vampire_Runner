@@ -120,7 +120,7 @@ public class Database : MonoBehaviour {
         }
     }
 
-    float FindHighestID()
+    float FindHighestIDColumn()
     {
 
         using (IDbConnection dbConnection = new SqliteConnection(connectionString))
@@ -146,6 +146,40 @@ public class Database : MonoBehaviour {
                     }
                 }
                 return position;//currentHighest;
+            }
+        }
+
+        return 0;//else return 0
+
+    }
+
+
+    float FindHighestID()
+    {
+
+        using (IDbConnection dbConnection = new SqliteConnection(connectionString))
+        {
+
+            float currentHighest = 0;
+            int position = 0;
+
+            GetScores();
+            int hsCount = dataList.Count;
+
+            if (dataList.Count > 0)
+            {
+                DataHolder lowestScore = dataList[dataList.Count - 1];
+
+                for (int i = 0; i < dataList.Count; i++)//loop through list and find the one with the highest id value.
+                {
+                    DataHolder current = dataList[i];
+                    if (current.ID > currentHighest)
+                    {
+                        currentHighest = current.ID;
+                        position = i;
+                    }
+                }
+                return currentHighest;
             }
         }
 
@@ -270,7 +304,7 @@ public class Database : MonoBehaviour {
         }
 
         //this actually works by just getting the highest here, the only reason for the bit above is to get the latest verison of the database into dataholder
-        DataHolder tmpScore = dataList[(int)FindHighestID()];
+        DataHolder tmpScore = dataList[(int)FindHighestIDColumn()];
         //Debug.Log("temp score " + tmpScore.HighScore.ToString());
 
         return tmpScore;
@@ -286,7 +320,7 @@ public class Database : MonoBehaviour {
             using (IDbCommand dbCmd = dbConnection.CreateCommand())
             {
                 //string sqlQuery = String.Format("INSERT INTO PlayerData(Name,HighScore,Skin1Unlock,Skin2Unlock) VALUES(\"{0}\", \"{1}\", \"{2}\", \"{3}\")", name, newScore, Skin1Unlock, Skin2Unlock); // \"{2}\", \"{3}\" ,Skin1Unlock,Skin2Unlock
-                string sqlQuery = String.Format("UPDATE PlayerData Set Skin1Unlock = \"{0}\", Skin2Unlock = \"{1}\" WHERE PlayerID = 59; ", skin1unlocked, skin2unlocked);
+                string sqlQuery = String.Format("UPDATE PlayerData Set Skin1Unlock = \"{0}\", Skin2Unlock = \"{1}\" WHERE PlayerID = \"{2}\"; ", skin1unlocked, skin2unlocked, FindHighestID());
 
                 dbCmd.CommandText = sqlQuery;
                 dbCmd.ExecuteScalar();
