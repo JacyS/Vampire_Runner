@@ -63,6 +63,19 @@ public class StoreController : MonoBehaviour
     public Button Multiplier5;
     public Button Multiplier10;
 
+    //OwnedSkins
+
+    public Text OwnedDefault;
+    public Text OwnedSkin1;
+    public Text OwnedSkin2;
+    public Button BDefault;
+    public Button BSkin1;
+    public Button BSkin2;
+    bool DefaultEquipped;
+    bool Skin1Equipped;
+    bool Skin2Equipped;
+
+
 
     GameObject DatabaseManager;
 
@@ -73,6 +86,7 @@ public class StoreController : MonoBehaviour
         skin1BatsText.text = skin1Bats + " BatCoins";
         skin2CoinsText.text = skin2Coins + " Coins";
         skin2BatsText.text = skin2Bats + " BatCoins";
+        OwnedDefault.text = "Use";
     }
 
     /* void Start()
@@ -121,6 +135,34 @@ public class StoreController : MonoBehaviour
         ResBatsText.text = ResBats * multiplier + " BatCoins";
         TimeCoinsText.text = TimeCoins * multiplier + " Coins";
         TimeBatsText.text = TimeBats * multiplier + " BatCoins";
+        
+        if (Skin1Bought == 0)
+        {
+            BSkin1.interactable = false;
+            OwnedSkin1.text = "Not Owned";
+            
+        }
+        else if (Skin1Bought == 1)
+        {
+            BSkin1.interactable = true;
+            //OwnedSkin1.text = "Owned";
+        }
+
+        if (Skin2Bought == 0)
+        {
+            BSkin2.interactable = false;
+            OwnedSkin2.text = "Not Owned";
+        }
+        else if (Skin2Bought == 1)
+        {
+            BSkin2.interactable = true;
+            //OwnedSkin2.text = "Owned";
+        }
+
+
+
+
+
     }
 
     public void PurchaseSkin1Coins()
@@ -134,6 +176,7 @@ public class StoreController : MonoBehaviour
         {
             coins = coins - skin1Coins;
             Skin1Bought = 1;
+            OwnedSkin1.text = "Use";
         }
 
     }
@@ -147,6 +190,7 @@ public class StoreController : MonoBehaviour
         {
             batcoins = batcoins - skin1Bats;
             Skin1Bought = 1;
+            OwnedSkin1.text = "Use";
             DatabaseManager.GetComponent<Database>().buySkin1();
         }
     }
@@ -160,6 +204,7 @@ public class StoreController : MonoBehaviour
         {
             coins = coins - skin2Coins;
             Skin2Bought = 1;
+            OwnedSkin2.text = "Use";
             DatabaseManager.GetComponent<Database>().buySkin2();
         }
 
@@ -173,6 +218,7 @@ public class StoreController : MonoBehaviour
         else
         {
             batcoins = batcoins - skin2Bats;
+            OwnedSkin2.text = "Use";
             Skin2Bought = 1;
         }
     }
@@ -300,5 +346,35 @@ public class StoreController : MonoBehaviour
         multiplier = 10;
     }
 
+    public void DefaultButton()
+    {
+        DefaultEquipped = true;
+        Skin1Equipped = false;
+        Skin2Equipped = false;
+        OwnedDefault.text = "Using";
+        OwnedSkin1.text = "Use";
+        OwnedSkin2.text = "Use";
+    }
+
+    public void Skin1Button()
+    {
+         DefaultEquipped = false;
+         Skin1Equipped = true;
+         Skin2Equipped = false;
+        OwnedDefault.text = "Use";
+        OwnedSkin1.text = "Using";
+        OwnedSkin2.text = "Use";
+
+    }
+
+    public void Skin2Button()
+    {
+        DefaultEquipped = false;
+        Skin1Equipped = false;
+        Skin2Equipped = true;
+        OwnedDefault.text = "Use";
+        OwnedSkin1.text = "Use";
+        OwnedSkin2.text = "Using";
+    }
 
 }
