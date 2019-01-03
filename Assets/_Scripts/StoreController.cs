@@ -117,6 +117,12 @@ public class StoreController : MonoBehaviour
         ResPowerUpsText.text = "Resurrection Tokens: " + ResPowerUps;
         TimePowerText.text = "Time Tokens: " + TimePower;
 
+
+        Skin1Bought = SaveScript.ReadSkin1();
+        Skin2Bought = SaveScript.ReadSkin2();
+
+
+
         if (Skin1Bought == 1)
         {
             //Disables button so the player cannot buy it twice 
@@ -162,7 +168,6 @@ public class StoreController : MonoBehaviour
             BSkin2.interactable = true;
             //OwnedSkin2.text = "Owned";
         }
-
 
 
 
