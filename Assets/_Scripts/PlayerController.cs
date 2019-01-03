@@ -341,7 +341,7 @@ public class PlayerController : MonoBehaviour {
             score = Mathf.Floor(endx - startx);
             GameObject.Find("ScoreText").GetComponent<Text>().text = "Score " + score.ToString();
 
-
+            PlayerPrefs.SetFloat("coins", PlayerPrefs.GetFloat("coins", 0) + runs_coins);
 
             //save score to database manager
             //string player_name = "test_player";
