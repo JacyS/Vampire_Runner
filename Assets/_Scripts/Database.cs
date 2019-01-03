@@ -23,6 +23,7 @@ public class Database : MonoBehaviour {
     public float batcoinsowned = 0;
     public float rezowned = 0;
     public float timeowned = 0;
+    public float set_skin = 0;
 
     float this_runs_score;
 
@@ -59,10 +60,10 @@ public class Database : MonoBehaviour {
         if (enterName.text != string.Empty)
         {
             float score = this_runs_score;//UnityEngine.Random.Range(1, 500); // replace this with the actual score that is found on the death of a player
-            InsertData(enterName.text, score, 0 , 0, 100 ,200, 300, 400, 500); //Read Comments below for variable meanings.
+            InsertData(enterName.text, score, (int)skin1unlocked, (int)skin2unlocked, (int)set_skin, (int)coinsowned, (int)batcoinsowned, (int)rezowned, (int)timeowned);//0 , 0, 100 ,200, 300, 400, 500); //Read Comments below for variable meanings.
             enterName.text = string.Empty;
 
-            SaveScore(enterName.text,score, 0);
+            //SaveScore(enterName.text,score, 0);
 
             ShowScores();
 
@@ -89,7 +90,7 @@ public class Database : MonoBehaviour {
         string q_createTable =
           "CREATE TABLE IF NOT EXISTS " + "PlayerData" + " (" +
           "PlayerID" + " INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-          "Name" + " TEXT  NOT NULL, " + "HighScore" + " FLOAT  NOT NULL, " + "Skin1Unlock" + " BOOLEAN DEFAULT '0' NOT NULL, " + "Skin2Unlock" + " BOOLEAN DEFAULT '0' NOT NULL," + "SkinSet" + " INTEGER DEFAULT '0' NOT NULL," + "CoinsOwned" + " INTEGER DEFAULT '0' NOT NULL," 
+          "Name" + " TEXT, " + "HighScore" + " FLOAT, " + "Skin1Unlock" + " BOOLEAN DEFAULT '0' NOT NULL, " + "Skin2Unlock" + " BOOLEAN DEFAULT '0' NOT NULL," + "SkinSet" + " INTEGER DEFAULT '0' NOT NULL," + "CoinsOwned" + " INTEGER DEFAULT '0' NOT NULL," 
           + "BatCoinsOwned" + " INTEGER DEFAULT '0' NOT NULL," + "RezPowerUpsOwned" + " INTEGER DEFAULT '0' NOT NULL," + "TimePowerUpsOwned" + " INTEGER DEFAULT '0' NOT NULL)";
 
         dbcmd.CommandText = q_createTable;
@@ -328,14 +329,35 @@ public class Database : MonoBehaviour {
     public void SaveOverwrite()
     {
 
-        using (IDbConnection dbConnection = new SqliteConnection(connectionString))
+        /*using (IDbConnection dbConnection = new SqliteConnection(connectionString))
         {
             dbConnection.Open();
 
             using (IDbCommand dbCmd = dbConnection.CreateCommand())
             {
                 //string sqlQuery = String.Format("INSERT INTO PlayerData(Name,HighScore,Skin1Unlock,Skin2Unlock) VALUES(\"{0}\", \"{1}\", \"{2}\", \"{3}\")", name, newScore, Skin1Unlock, Skin2Unlock); // \"{2}\", \"{3}\" ,Skin1Unlock,Skin2Unlock
-                string sqlQuery = String.Format("UPDATE PlayerData Set Skin1Unlock = \"{0}\", Skin2Unlock = \"{1}\", BatCoinsOwned = \"{3}\", CoinsOwned = \"{4}\" , TimePowerUpsOwned = \"{5}\" , RezPowerUpsOwned = \"{6}\" ,  WHERE PlayerID = \"{2}\"; ", skin1unlocked, skin2unlocked, FindHighestID(),batcoinsowned, coinsowned, timeowned, rezowned);
+
+                string sqlQuery = "";
+                ////////string sqlQuery = String.Format("INSERT INTO PlayerData(Skin1Unlock = \"{0}\", Skin2Unlock = \"{1}\", BatCoinsOwned = \"{3}\", CoinsOwned = \"{4}\" , TimePowerUpsOwned = \"{5}\" , RezPowerUpsOwned = \"{6}\"; ", skin1unlocked, skin2unlocked, FindHighestID().ToString() ,batcoinsowned, coinsowned, timeowned, rezowned);
+
+                //string sqlQuery = String.Format("INSERT INTO PlayerData Set Skin1Unlock = \"{0}\", Skin2Unlock = \"{1}\", BatCoinsOwned = \"{3}\", CoinsOwned = \"{4}\" , TimePowerUpsOwned = \"{5}\" , RezPowerUpsOwned = \"{6}\" ,  WHERE PlayerID = \"{2}\"; ", skin1unlocked, skin2unlocked, FindHighestID().ToString(), batcoinsowned, coinsowned, timeowned, rezowned);
+
+
+                dbCmd.CommandText = sqlQuery;
+                dbCmd.ExecuteScalar();
+                dbConnection.Close();
+            }
+        }*/
+
+        //InsertData(null,0, (int)skin1unlocked, (int)skin2unlocked, (int)set_skin, (int)coinsowned, (int)batcoinsowned, (int)rezowned, (int)timeowned);
+
+        using (IDbConnection dbConnection = new SqliteConnection(connectionString))
+        {
+            dbConnection.Open();
+            using (IDbCommand dbCmd = dbConnection.CreateCommand())
+            {
+                dbConnection.Open();
+                string sqlQuery = String.Format("INSERT INTO PlayerData(Skin1Unlock,Skin2Unlock, SkinSet, CoinsOwned, BatCoinsOwned, RezPowerUpsOwned, TimePowerUpsOwned) VALUES(\"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\",\"{5}\", \"{6}\")", skin1unlocked, skin2unlocked, set_skin, coinsowned, batcoinsowned, rezowned, timeowned); // \"{2}\", \"{3}\" ,Skin1Unlock,Skin2Unlock
 
                 dbCmd.CommandText = sqlQuery;
                 dbCmd.ExecuteScalar();
