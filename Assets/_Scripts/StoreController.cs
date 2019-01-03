@@ -98,12 +98,15 @@ public class StoreController : MonoBehaviour
 
     private void Start()
     {
+
         SaveObj = GameObject.Find("SaveObj");
         SaveScript = SaveObj.GetComponent<SaveVariablesScript>();
 
         batcoins = SaveScript.ReadBatcoins();
         ResPowerUps = SaveScript.ReadRes();
         TimePower = SaveScript.ReadTime();
+        coins = SaveScript.ReadCoins();
+
     }
 
     void Update()
@@ -176,6 +179,7 @@ public class StoreController : MonoBehaviour
         else//if they have enough will take away the coins and add the skin to the player
         {
             coins = coins - skin1Coins;
+            SaveScript.SetCoins(coins);
             Skin1Bought = 1;
             SaveScript.SetSkin1();
             OwnedSkin1.text = "Use";
@@ -207,6 +211,7 @@ public class StoreController : MonoBehaviour
         else
         {
             coins = coins - skin2Coins;
+            SaveScript.SetCoins(coins);
             Skin2Bought = 1;
             OwnedSkin2.text = "Use";
             SaveScript.SetSkin2();
@@ -241,6 +246,7 @@ public class StoreController : MonoBehaviour
         {
             //takes away the coins with the selected multiplier value and then add the powerup when purchased with the chosen multiplier
             coins = coins - ResCoins * multiplier;
+            SaveScript.SetCoins(coins);
             ResCoinsText.text = "Purchased";
             ResPowerUps = ResPowerUps + 1 * multiplier;
             SaveScript.SetRes(ResPowerUps);
@@ -273,6 +279,7 @@ public class StoreController : MonoBehaviour
         else
         {
             coins = coins - TimeCoins * multiplier;
+            SaveScript.SetCoins(coins);
             TimeCoinsText.text = "Purchased";
             TimePower = TimePower + 1 * multiplier;
             SaveScript.SetTime(TimePower);

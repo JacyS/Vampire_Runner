@@ -27,6 +27,20 @@ public class SaveVariablesScript : MonoBehaviour {
 
 
 
+    //coins
+    public float ReadCoins()
+    {
+        return PlayerPrefs.GetFloat("coins");
+    }
+
+    public void SetCoins(float coins)
+    {
+        PlayerPrefs.SetFloat("coins", coins);
+    }
+
+
+
+
     //skin1
     public float ReadSkin1()
     {
