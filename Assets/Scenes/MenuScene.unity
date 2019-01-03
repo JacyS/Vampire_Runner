@@ -1885,7 +1885,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Vampire Runner!
+  m_Text: Vamp Run!
 --- !u!222 &373264860
 CanvasRenderer:
   m_ObjectHideFlags: 0
