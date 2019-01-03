@@ -10,7 +10,7 @@ public class PickupGenerator : MonoBehaviour {
     {
         GameObject pickup1 = pickupPool.GetPooledObject();
         pickup1.transform.position = startPosition;
-        pickup1.SetActive(true);
+        //pickup1.SetActive(true);
     }
 
 }
