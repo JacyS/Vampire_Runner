@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D myRigidbody;
     private Collider2D myCollider;
     private Animator myAnimator;
+    private AudioSource myAudiosource;
 
     public bool grounded;
     bool sliding;
@@ -69,6 +70,8 @@ public class PlayerController : MonoBehaviour {
     //inputs
     Vector2 start_swipe;
     Vector2 end_swipe;
+
+    public AudioClip[] player_sounds;
     
 
     // Use this for initialization
@@ -76,6 +79,7 @@ public class PlayerController : MonoBehaviour {
         myRigidbody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<CircleCollider2D>();
         myAnimator = GetComponent<Animator>();
+        myAudiosource = GetComponent<AudioSource>();
 
         //gameOver = Instantiate(gameOver);
         gameOver.SetActive(false);
@@ -103,6 +107,7 @@ public class PlayerController : MonoBehaviour {
             if (JumpButton && grounded && !sliding)
             {
                 myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
+                myAudiosource.PlayOneShot(player_sounds[1]);
             }
 
             if (SlideButton && grounded && !sliding && canSlide)
@@ -276,6 +281,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (collision.tag == "hazard")
         {
+            myAudiosource.PlayOneShot(player_sounds[3]);
             PlayerDie();
         }
 
@@ -288,6 +294,7 @@ public class PlayerController : MonoBehaviour {
 
         if (collision.tag == "coin_pickup")
         {
+            myAudiosource.PlayOneShot(player_sounds[0]);
             collision.gameObject.SetActive(false);
             runs_coins++;
         }
@@ -298,6 +305,7 @@ public class PlayerController : MonoBehaviour {
     public void GetPowerup(string type)
     {
         Debug.Log("Powerup Collected!!!");
+        myAudiosource.PlayOneShot(player_sounds[2]);
 
         if (type == "bat") {
             is_bat = true;
@@ -308,6 +316,7 @@ public class PlayerController : MonoBehaviour {
 
         if (type == "coin")
         {
+
             runs_coins += powerup_coin_amount;
         }
 
