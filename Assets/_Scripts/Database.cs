@@ -29,31 +29,15 @@ public class Database : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //connectionString = "URI=file:" + Application.dataPath + "/" + "Database.s3db"; //Only use this for the windows build and use in the editor, I don't know why they dont work interchangeably but I don't care because it's a simple workaround.
-        connectionString = "URI=file:" + Application.persistentDataPath + "/" + "Database.s3db";// - THIS MUST BE SET BEFORE THE ANDROID BUILD, AS IT IS THE ONLY WAY IT WILL WORK PROPERLY IN UNITY
+        connectionString = "URI=file:" + Application.dataPath + "/" + "Database.s3db"; //Only use this for the windows build and use in the editor, I don't know why they dont work interchangeably but I don't care because it's a simple workaround.
+        //connectionString = "URI=file:" + Application.persistentDataPath + "/" + "Database.s3db";// - THIS MUST BE SET BEFORE THE ANDROID BUILD, AS IT IS THE ONLY WAY IT WILL WORK PROPERLY IN UNITY
         CreateDataBase();
         DeleteExtraScore();
-        //InsertData("test", 4334, 1, 1);
-        // true, true
-        //CreateSave();
-        //LoadSave();
-        //DeleteScore();
         ShowScores();
 
         DataHolder current = LoadSave();
         Debug.Log("current save score " +current.HighScore.ToString());
 	}
-
-    private void Update()
-    {
-        
-        //if (Input.GetButton("Fire1"))
-        //{
-          //  LoadSave();
-         //   buySkin1();
-        //    LoadSave();
-       // }
-    }
 
     public void EnterName()
     {
@@ -328,29 +312,6 @@ public class Database : MonoBehaviour {
 
     public void SaveOverwrite()
     {
-
-        /*using (IDbConnection dbConnection = new SqliteConnection(connectionString))
-        {
-            dbConnection.Open();
-
-            using (IDbCommand dbCmd = dbConnection.CreateCommand())
-            {
-                //string sqlQuery = String.Format("INSERT INTO PlayerData(Name,HighScore,Skin1Unlock,Skin2Unlock) VALUES(\"{0}\", \"{1}\", \"{2}\", \"{3}\")", name, newScore, Skin1Unlock, Skin2Unlock); // \"{2}\", \"{3}\" ,Skin1Unlock,Skin2Unlock
-
-                string sqlQuery = "";
-                ////////string sqlQuery = String.Format("INSERT INTO PlayerData(Skin1Unlock = \"{0}\", Skin2Unlock = \"{1}\", BatCoinsOwned = \"{3}\", CoinsOwned = \"{4}\" , TimePowerUpsOwned = \"{5}\" , RezPowerUpsOwned = \"{6}\"; ", skin1unlocked, skin2unlocked, FindHighestID().ToString() ,batcoinsowned, coinsowned, timeowned, rezowned);
-
-                //string sqlQuery = String.Format("INSERT INTO PlayerData Set Skin1Unlock = \"{0}\", Skin2Unlock = \"{1}\", BatCoinsOwned = \"{3}\", CoinsOwned = \"{4}\" , TimePowerUpsOwned = \"{5}\" , RezPowerUpsOwned = \"{6}\" ,  WHERE PlayerID = \"{2}\"; ", skin1unlocked, skin2unlocked, FindHighestID().ToString(), batcoinsowned, coinsowned, timeowned, rezowned);
-
-
-                dbCmd.CommandText = sqlQuery;
-                dbCmd.ExecuteScalar();
-                dbConnection.Close();
-            }
-        }*/
-
-        //InsertData(null,0, (int)skin1unlocked, (int)skin2unlocked, (int)set_skin, (int)coinsowned, (int)batcoinsowned, (int)rezowned, (int)timeowned);
-
         using (IDbConnection dbConnection = new SqliteConnection(connectionString))
         {
             dbConnection.Open();
