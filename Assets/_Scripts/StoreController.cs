@@ -78,6 +78,8 @@ public class StoreController : MonoBehaviour
 
 
     GameObject DatabaseManager;
+    GameObject SaveObj;
+    SaveVariablesScript SaveScript;
 
     void Awake()
     {
@@ -96,13 +98,12 @@ public class StoreController : MonoBehaviour
 
     private void Start()
     {
-        DatabaseManager = GameObject.Find("DatabaseManager");
+        SaveObj = GameObject.Find("SaveObj");
+        SaveScript = SaveObj.GetComponent<SaveVariablesScript>();
 
-        //Skin1Bought = DatabaseManager.GetComponent<Database>().skin1unlocked;
-        //Skin2Bought = DatabaseManager.GetComponent<Database>().skin2unlocked;
-        //batcoins = DatabaseManager.GetComponent<Database>().GetBatCoins();
-
-        Debug.Log("batcoins " + batcoins.ToString());
+        batcoins = SaveScript.ReadBatcoins();
+        ResPowerUps = SaveScript.ReadRes();
+        TimePower = SaveScript.ReadTime();
     }
 
     void Update()
@@ -176,6 +177,7 @@ public class StoreController : MonoBehaviour
         {
             coins = coins - skin1Coins;
             Skin1Bought = 1;
+            SaveScript.SetSkin1();
             OwnedSkin1.text = "Use";
         }
 
@@ -189,9 +191,11 @@ public class StoreController : MonoBehaviour
         else
         {
             batcoins = batcoins - skin1Bats;
+            SaveScript.SetBatcoins(batcoins);
             Skin1Bought = 1;
             OwnedSkin1.text = "Use";
-            DatabaseManager.GetComponent<Database>().buySkin1();
+            SaveScript.SetSkin1();
+            //DatabaseManager.GetComponent<Database>().buySkin1();
         }
     }
     public void PurchaseSkin2Coins()
@@ -205,7 +209,7 @@ public class StoreController : MonoBehaviour
             coins = coins - skin2Coins;
             Skin2Bought = 1;
             OwnedSkin2.text = "Use";
-            DatabaseManager.GetComponent<Database>().buySkin2();
+            SaveScript.SetSkin2();
         }
 
     }
@@ -219,7 +223,9 @@ public class StoreController : MonoBehaviour
         {
             batcoins = batcoins - skin2Bats;
             OwnedSkin2.text = "Use";
+            SaveScript.SetBatcoins(batcoins);
             Skin2Bought = 1;
+            SaveScript.SetSkin2();
         }
     }
 
@@ -237,6 +243,7 @@ public class StoreController : MonoBehaviour
             coins = coins - ResCoins * multiplier;
             ResCoinsText.text = "Purchased";
             ResPowerUps = ResPowerUps + 1 * multiplier;
+            SaveScript.SetRes(ResPowerUps);
            
         }
     }
@@ -250,9 +257,10 @@ public class StoreController : MonoBehaviour
         else
         {
             batcoins = batcoins - ResBats * multiplier;
+            SaveScript.SetBatcoins(batcoins);
             ResBatsText.text = "Purchased";
             ResPowerUps = ResPowerUps + 1 * multiplier;
-
+            SaveScript.SetRes(ResPowerUps);
         }
     }
 
@@ -267,7 +275,7 @@ public class StoreController : MonoBehaviour
             coins = coins - TimeCoins * multiplier;
             TimeCoinsText.text = "Purchased";
             TimePower = TimePower + 1 * multiplier;
-
+            SaveScript.SetTime(TimePower);
         }
     }
 
@@ -280,9 +288,10 @@ public class StoreController : MonoBehaviour
         else
         {
             batcoins = batcoins - TimeBats * multiplier;
+            SaveScript.SetBatcoins(batcoins);
             TimeBatsText.text = "Purchased";
             TimePower = TimePower + 1 * multiplier;
-
+            SaveScript.SetTime(TimePower);
         }
     }
 
@@ -292,18 +301,21 @@ public class StoreController : MonoBehaviour
 
     public void CurrencyPack1()
     {
-        batcoins = batcoins + 500;
-        DatabaseManager.GetComponent<Database>().buyBatCoins(batcoins);
+        batcoins = SaveScript.ReadBatcoins() + 500;
+        SaveScript.SetBatcoins(batcoins);
+        //DatabaseManager.GetComponent<Database>().buyBatCoins(batcoins);
     }
     public void CurrencyPack2()
     {
-        batcoins = batcoins + 2000;
-        DatabaseManager.GetComponent<Database>().buyBatCoins(batcoins);
+        batcoins = SaveScript.ReadBatcoins() + 2000;
+        SaveScript.SetBatcoins(batcoins);
+        //DatabaseManager.GetComponent<Database>().buyBatCoins(batcoins);
     }
     public void CurrencyPack3()
     {
-        batcoins = batcoins + 5000;
-        DatabaseManager.GetComponent<Database>().buyBatCoins(batcoins);
+        batcoins = SaveScript.ReadBatcoins() + 5000;
+        SaveScript.SetBatcoins(batcoins);
+        //DatabaseManager.GetComponent<Database>().buyBatCoins(batcoins);
     }
 
 
