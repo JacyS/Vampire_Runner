@@ -370,13 +370,14 @@ public class StoreController : MonoBehaviour
 
     public void Skin1Button()
     {
-         DefaultEquipped = false;
-         Skin1Equipped = true;
-         Skin2Equipped = false;
+        DefaultEquipped = false;
+        Skin1Equipped = true;
+        Skin2Equipped = false;
         OwnedDefault.text = "Use";
         OwnedSkin1.text = "Using";
         OwnedSkin2.text = "Use";
 
+        SaveScript.SetCurrentSkin(1);
     }
 
     public void Skin2Button()
@@ -387,6 +388,7 @@ public class StoreController : MonoBehaviour
         OwnedDefault.text = "Use";
         OwnedSkin1.text = "Use";
         OwnedSkin2.text = "Using";
+        SaveScript.SetCurrentSkin(2);
     }
 
 }

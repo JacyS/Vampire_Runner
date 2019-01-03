@@ -74,4 +74,16 @@ public class SaveVariablesScript : MonoBehaviour {
         PlayerPrefs.SetFloat("time", timeamount);
     }
 
+
+    //Skin Equipped
+    public float ReadCurrentSkin()
+    {
+        return PlayerPrefs.GetFloat("CurrentSkin");
+    }
+
+    public void SetCurrentSkin(float CurrentSkinValue)
+    {
+        PlayerPrefs.SetFloat("CurrentSkin", CurrentSkinValue);
+    }
+
 }

@@ -880,7 +880,7 @@ Prefab:
     - target: {fileID: 224288249202851578, guid: a6943e8ec37d51f4195ef7d0d5029a7f,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000061035156
+      value: 0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 224515860111334972, guid: a6943e8ec37d51f4195ef7d0d5029a7f,
         type: 2}
@@ -4272,6 +4272,7 @@ MonoBehaviour:
   batcoinsowned: 0
   rezowned: 0
   timeowned: 0
+  set_skin: 0
 --- !u!4 &1793576256
 Transform:
   m_ObjectHideFlags: 0
