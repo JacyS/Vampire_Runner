@@ -77,7 +77,7 @@ public class StoreController : MonoBehaviour
 
 
 
-    GameObject DatabaseManager;
+    //GameObject DatabaseManager;
     GameObject SaveObj;
     SaveVariablesScript SaveScript;
 
