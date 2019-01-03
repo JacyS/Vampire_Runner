@@ -85,6 +85,7 @@ public class PlayerController : MonoBehaviour {
         sunrise_distance = initial_sunrise_distance;
 
         myAnimator.SetFloat("skin", PlayerPrefs.GetFloat("CurrentSkin"));
+        Debug.Log(PlayerPrefs.GetFloat("CurrentSkin"));
     }
 	
 	// Update is called once per frame

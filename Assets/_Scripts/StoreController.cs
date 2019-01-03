@@ -373,6 +373,7 @@ public class StoreController : MonoBehaviour
         OwnedDefault.text = "Using";
         OwnedSkin1.text = "Use";
         OwnedSkin2.text = "Use";
+        SaveScript.SetCurrentSkin(0);
     }
 
     public void Skin1Button()
