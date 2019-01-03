@@ -880,7 +880,7 @@ Prefab:
     - target: {fileID: 224288249202851578, guid: a6943e8ec37d51f4195ef7d0d5029a7f,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 224515860111334972, guid: a6943e8ec37d51f4195ef7d0d5029a7f,
         type: 2}
@@ -1378,8 +1378,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -30, y: -575}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -12, y: -557}
+  m_SizeDelta: {x: 505.3, y: 94.769}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &467047382
 MonoBehaviour:
@@ -3626,7 +3626,7 @@ RectTransform:
   m_GameObject: {fileID: 1455128819}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 2009030396}
   m_RootOrder: 0
@@ -3658,16 +3658,16 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 98eaf0f8da44e1346b32510b74c53911, type: 3}
-    m_FontSize: 14
+    m_FontSize: 90
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_MinSize: 9
+    m_MaxSize: 90
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: RUN AGAIN
 --- !u!222 &1455128822
@@ -4268,6 +4268,10 @@ MonoBehaviour:
   highScoreTable: {fileID: 497921267}
   skin1unlocked: 0
   skin2unlocked: 0
+  coinsowned: 0
+  batcoinsowned: 0
+  rezowned: 0
+  timeowned: 0
 --- !u!4 &1793576256
 Transform:
   m_ObjectHideFlags: 0
@@ -4418,7 +4422,7 @@ RectTransform:
   m_GameObject: {fileID: 1886720097}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 467047381}
   m_RootOrder: 0
@@ -4441,7 +4445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5566038, g: 0.5349617, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.85098046, b: 0.25882354, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -4450,16 +4454,16 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 98eaf0f8da44e1346b32510b74c53911, type: 3}
-    m_FontSize: 14
+    m_FontSize: 90
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_MinSize: 9
+    m_MaxSize: 90
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: EXIT TO MENU
 --- !u!222 &1886720100
@@ -4820,8 +4824,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -30, y: -617}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -12, y: -657}
+  m_SizeDelta: {x: 505.3, y: 94.769}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2009030397
 MonoBehaviour:
