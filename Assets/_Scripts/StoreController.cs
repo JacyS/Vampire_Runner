@@ -77,24 +77,18 @@ public class StoreController : MonoBehaviour
 
     /* void Start()
      {
-         DatabaseManager = GameObject.Find("DatabaseManager");
-
-         Skin1Bought = DatabaseManager.GetComponent<Database>().skin1unlocked;
-         Skin2Bought = DatabaseManager.GetComponent<Database>().skin2unlocked;
-         batcoins = DatabaseManager.GetComponent<Database>().GetBatCoins();
-
-         Debug.Log("batcoins " + batcoins.ToString());
+        
      }*/
 
     private void Start()
     {
         DatabaseManager = GameObject.Find("DatabaseManager");
 
-        Skin1Bought = DatabaseManager.GetComponent<Database>().skin1unlocked;
-        Skin2Bought = DatabaseManager.GetComponent<Database>().skin2unlocked;
-        batcoins = DatabaseManager.GetComponent<Database>().GetBatCoins();
+        //Skin1Bought = DatabaseManager.GetComponent<Database>().skin1unlocked;
+        //Skin2Bought = DatabaseManager.GetComponent<Database>().skin2unlocked;
+        //batcoins = DatabaseManager.GetComponent<Database>().GetBatCoins();
 
-        Debug.Log("batcoins " + batcoins.ToString());// I don't know why this code isn't running!
+        Debug.Log("batcoins " + batcoins.ToString());
     }
 
     void Update()
@@ -258,10 +252,12 @@ public class StoreController : MonoBehaviour
     public void CurrencyPack2()
     {
         batcoins = batcoins + 2000;
+        DatabaseManager.GetComponent<Database>().buyBatCoins(batcoins);
     }
     public void CurrencyPack3()
     {
         batcoins = batcoins + 5000;
+        DatabaseManager.GetComponent<Database>().buyBatCoins(batcoins);
     }
 
 
