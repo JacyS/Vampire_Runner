@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class MainMenuController : MonoBehaviour
 {
 
-    public Button PlayButton, OptionsButton, HSButton, OptionsBack, HighscoreBack, Store, StoreSkins, StorePowerUps, StoreCurrency;
-    public GameObject MMenuContain, OptionsContain, HighscoreContain, StoreContain, StoreSkinsContain, StorePowerUpsContain, StoreCurrencyContain;
+    public Button PlayButton, OptionsButton, HSButton, OptionsBack, HighscoreBack, Store, StoreSkins, StorePowerUps, StoreCurrency, StoreOwned;
+    public GameObject MMenuContain, OptionsContain, HighscoreContain, StoreContain, StoreSkinsContain, StorePowerUpsContain, StoreCurrencyContain, StoreOwnedContain;
 
     // Use this for initialization
     void Start()
@@ -56,6 +56,7 @@ public class MainMenuController : MonoBehaviour
         StoreSkinsContain.SetActive(false);
         StorePowerUpsContain.SetActive(true);//Show powerup store
         StoreCurrencyContain.SetActive(false);
+        StoreOwnedContain.SetActive(false);
     }
 
     public void StoreSkinsClick()
@@ -63,6 +64,7 @@ public class MainMenuController : MonoBehaviour
         StoreSkinsContain.SetActive(true);//Show skin store
         StorePowerUpsContain.SetActive(false);
         StoreCurrencyContain.SetActive(false);
+        StoreOwnedContain.SetActive(false);
     }
 
     public void StoreCurrencyClick()
@@ -70,6 +72,15 @@ public class MainMenuController : MonoBehaviour
         StoreSkinsContain.SetActive(false);
         StorePowerUpsContain.SetActive(false);
         StoreCurrencyContain.SetActive(true); //Show currency store
+        StoreOwnedContain.SetActive(false);
+    }
+
+    public void StoreOwnedClick()
+    {
+        StoreSkinsContain.SetActive(false);
+        StorePowerUpsContain.SetActive(false);
+        StoreCurrencyContain.SetActive(false); 
+        StoreOwnedContain.SetActive(true);//Show OwnedSkins store
     }
 
     public void GotoNextScene()
